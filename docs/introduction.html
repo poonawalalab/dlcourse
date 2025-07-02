@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Learning Course</title>
+<title>Introduction – Deep Learning Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -107,15 +107,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link active" data-scroll-target="#numpy">NumPy</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Deep Learning Course</h1>
+<h1 class="title">Introduction</h1>
 </div>
 
 
@@ -132,23 +138,18 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>This course focuses on supervised machine learning. Two areas of machine learning we do not cover involve self-supervised learning and reinforcement learning.</p>
+<section id="numpy" class="level2">
+<h2 class="anchored" data-anchor-id="numpy">NumPy</h2>
+<p>A nice overview of using <code>numpy</code> is located <a href="https://numpy.org/doc/stable/user/absolute_beginners.html">online here</a>.</p>
+<p>Two <strong>KEY</strong> issues to watch out for:</p>
 <ol type="1">
-<li><a href="introduction.html">Introduction</a>
-<ul>
-<li><a href="introduction.html#numpy">NumPy</a></li>
-</ul></li>
-<li><a href="simplemodels.html">Simple Models</a></li>
-<li><a href="mlps.html">Multilayer Perceptrons (MLPs)</a></li>
-<li><a href="pytorch.html">PyTorch</a></li>
-<li>Datasets</li>
-<li><a href="pytorch.html">CNNs</a>
-<ul>
-<li>Convolutions</li>
-<li>Tensors</li>
-</ul></li>
+<li>Standard matrix multiplication in <code>numpy</code> uses the <code>@</code> symbol, not the <code>*</code> symbol. Users coming from <code>Matlab</code> or <code>Julia</code> often trip over this issue a few times until they internalize the new symbol.</li>
+<li>2D Arrays are stored in row-major form.</li>
 </ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
