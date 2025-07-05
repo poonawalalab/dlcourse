@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -112,7 +141,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link active" data-scroll-target="#numpy">NumPy</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a>
+  <ul class="collapse">
+  <li><a href="#virtual-environment" id="toc-virtual-environment" class="nav-link" data-scroll-target="#virtual-environment">Virtual Environment</a></li>
+  </ul></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy">NumPy</a></li>
   </ul>
 </nav>
     </div>
@@ -139,6 +172,31 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This course focuses on supervised machine learning. Two areas of machine learning we do not cover involve self-supervised learning and reinforcement learning.</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>We use the following packages:</p>
+<ol type="1">
+<li><code>numpy</code>: working with <span class="math inline">\(n\)</span>-D arrays</li>
+<li><code>torch</code>: training of differentiable models</li>
+<li><code>pandas</code>: working with data</li>
+<li><code>matplotlib</code>: plotting</li>
+<li><code>tqdm</code>: progress bars in the command line</li>
+</ol>
+<p>The following command uses <code>pip</code> to install these <code>python</code> packages:</p>
+<pre><code># Maybe use a virtual environment; see below
+pip install torch numpy matplotlib tqdm pandas</code></pre>
+<section id="virtual-environment" class="level3">
+<h3 class="anchored" data-anchor-id="virtual-environment">Virtual Environment</h3>
+<p>Virtual environments allow you to install a custom set of packages with custom package versions for a project.</p>
+<p>Inside the <code>dlcourse</code> directory, run</p>
+<pre><code>python -m venv code-venv</code></pre>
+<p>to create a blank virtual environment.</p>
+<p>Activate it, and then install packages. Upon activate, the command line prompt changes to start with the name of the virtual environment. Here, it would be <code>(code-venv)</code>:</p>
+<pre><code>source code-venv/bin/activate
+pip install torch numpy matplotlib tqdm pandas</code></pre>
+<p>When you are done, you can run <code>deactivate</code> to return to the default global environment.</p>
+</section>
+</section>
 <section id="numpy" class="level2">
 <h2 class="anchored" data-anchor-id="numpy">NumPy</h2>
 <p>A nice overview of using <code>numpy</code> is located <a href="https://numpy.org/doc/stable/user/absolute_beginners.html">online here</a>.</p>
