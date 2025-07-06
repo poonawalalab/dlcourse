@@ -213,7 +213,7 @@ window.Quarto = {
 <section id="linear-models-regression" class="level2">
 <h2 class="anchored" data-anchor-id="linear-models-regression">Linear Models &amp; Regression</h2>
 <p>Suppose we have noisy data <span class="math inline">\((x_i,y_i)_{1,\dots,N}\)</span> that corresponds to a true function <span class="math inline">\(f(x)= 4 x + 5\)</span>. It looks like:</p>
-<div id="53969cdd" class="cell" data-execution_count="1">
+<div id="c589b928" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -225,7 +225,7 @@ window.Quarto = {
 <p>Our goal is to identify <span class="math inline">\(f(x)\)</span> from data <span class="math inline">\((x_i,y_i)_{1,\dots,N}\)</span>.</p>
 <p>We can cheat a bit and claim that the relationship is given by a linear model: <span class="math display">\[ f(x) = a x +b.\]</span></p>
 <p>Given a datum, say <span class="math inline">\((x_2,y_2)\)</span>, our guess for <span class="math inline">\(f(x_2)\)</span> is <span class="math inline">\(a x_2 +b\)</span>. If we know that <span class="math inline">\(a=4\)</span> and <span class="math inline">\(b=5\)</span>, we would get <span class="math inline">\(y_2 = f(x_2)\)</span> (ignoring noise). If we don’t have a good guess, then <span class="math inline">\(f(x_2)\)</span> may not be close to <span class="math inline">\(y_2\)</span>:</p>
-<div id="b66193ca" class="cell" data-execution_count="2">
+<div id="bf299f03" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -241,24 +241,25 @@ window.Quarto = {
 <p><span class="math display">\[ \theta^\star = \arg \min_\theta L(\theta). \]</span></p>
 <p>The theory for this objective function is especially nice so we can derive a closed-form solution for the minimizer:</p>
 <p><span class="math display">\[ \theta^\star = \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{X}^\top  \mathbf{y}.\]</span></p>
-<div id="3701777d" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Xt <span class="op">=</span> np.stack([x,np.ones(<span class="dv">100</span>)])  <span class="co"># build transpose of X </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span>  np.linalg.inv(Xt <span class="op">@</span> Xt.T) <span class="op">@</span> (Xt <span class="op">@</span> y.T ) <span class="co"># Implement the equation above using numpy (np)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"a = </span><span class="sc">{</span>theta[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, b = </span><span class="sc">{</span>theta[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y_opt <span class="op">=</span> theta[<span class="dv">0</span>]<span class="op">*</span>x <span class="op">+</span> theta[<span class="dv">1</span>] <span class="co"># prediction using these optimal parameters</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data, noise free, prediction:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(x,y,label<span class="op">=</span><span class="st">"data"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_line,label<span class="op">=</span><span class="st">"noise free"</span>,linestyle<span class="op">=</span><span class="st">"dashed"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_opt,label<span class="op">=</span><span class="ss">f"prediction f(x) = a x + b"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f"$x$"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$y$"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="dabcad39" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Closed-form solution compare prediction with true model</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Xt <span class="op">=</span> np.stack([x,np.ones(<span class="dv">100</span>)])  <span class="co"># build transpose of X </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span>  np.linalg.inv(Xt <span class="op">@</span> Xt.T) <span class="op">@</span> (Xt <span class="op">@</span> y.T ) <span class="co"># Implement the equation above using numpy (np)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"a = </span><span class="sc">{</span>theta[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">, b = </span><span class="sc">{</span>theta[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y_opt <span class="op">=</span> theta[<span class="dv">0</span>]<span class="op">*</span>x <span class="op">+</span> theta[<span class="dv">1</span>] <span class="co"># prediction using these optimal parameters</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data, noise free, prediction:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(x,y,label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_line,label<span class="op">=</span><span class="st">"noise free"</span>,linestyle<span class="op">=</span><span class="st">"dashed"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_opt,label<span class="op">=</span><span class="ss">f"prediction f(x) = a x + b"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f"$x$"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$y$"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>a = 3.9901009023287557, b = 4.970324716497337</code></pre>
+<pre><code>a = 3.982756115096176, b = 4.930905605590749</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -273,7 +274,8 @@ window.Quarto = {
 <p>We found <span class="math inline">\(\theta = [a;b]\)</span> by solving the unconstrained minimization problem in closed form. An alternative is to use an iterative algorithm that tries to pick a new guess for <span class="math inline">\(\theta\)</span> that has a lower loss. For differentiable objectives, one algorithm is steepest descent:</p>
 <p><span class="math display">\[\theta_{k+1} = \theta_{k} - \alpha  \nabla L(\theta_k),\]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> is a step size and <span class="math inline">\(\nabla L\)</span> is the gradient of the Loss function.</p>
-<div id="79c06d81" class="cell" data-execution_count="4">
+<p>The iterates of <span class="math inline">\(\theta\)</span> and the loss value are given below.</p>
+<div id="f07c6925" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -282,14 +284,12 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>a = nan, b = nan</code></pre>
+<pre><code>a = 3.982756090878617, b = 4.930905605590748</code></pre>
 </div>
-</div>
-<div id="337db0ab" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="simplemodels_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="simplemodels_files/figure-html/cell-5-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -301,11 +301,11 @@ window.Quarto = {
 <p>Regression tries to find a relationship between two continuous variables. In many problems, the input to a model may be continuous, but the output we want is discrete valued. For example, our body temperature is discrete valued, but we may want to use it to decide whether to call in sick or not.</p>
 <p>We can still use continuous regression, but with the trick that outputs are integer valued, and our models are biased to producing nearly-integral outputs for most inputs.</p>
 <p>For example, consider the standard logistic function: <span class="math display">\[f(x) = \frac{1}{1+e^{-x}}.\]</span> Away from <span class="math inline">\(x=0\)</span>, the value is close to either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. This number is often interpreted as a probability of belonging to a class.</p>
-<div id="935699bd" class="cell" data-execution_count="6">
+<div id="7542f729" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="simplemodels_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="simplemodels_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -326,7 +326,19 @@ window.Quarto = {
 <li>petal width</li>
 </ol>
 <p>Here, we will solve a partial version of this classification problem. We will try to predict whether an iris belongs to species setosa or versicolor from the petal length. The data look like:</p>
-<div id="082fe0d4" class="cell" data-execution_count="7">
+<div id="474ed333" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The data suggest we can use an <span class="math inline">\(S\)</span>-shaped curve to map petal length to a number that we interpret as the probability of the petal belonging to species versicolor.</p>
+<p>The model is <span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( a x + b\right)}. \]</span></p>
+<p>We have data <span class="math inline">\((x_i,y_i)\)</span> where <span class="math inline">\(x_i\)</span> is the petal length of the <span class="math inline">\(i^{\mathrm{th}}\)</span> flower and <span class="math inline">\(y_i\)</span> is <span class="math inline">\(0\)</span> if it is of species setosa and <span class="math inline">\(1\)</span> if it is of species versicolor. Then, we can learn parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> by minimizing a mean squared error loss function using gradient descent:</p>
+<div id="1c239f09" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -334,11 +346,11 @@ window.Quarto = {
 </figure>
 </div>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a = -5.425312673470728, b = -14.358298478932687</code></pre>
 </div>
-<p>The data suggest we can use an <span class="math inline">\(S\)</span>-shaped curve to map petal length to a number that we interpret as the probability of the petal belonging to species versicolor.</p>
-<p>The model is <span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( a x + b\right)}. \]</span></p>
-<p>We have data <span class="math inline">\((x_i,y_i)\)</span> where <span class="math inline">\(x_i\)</span> is the petal length of the <span class="math inline">\(i^{\mathrm{th}}\)</span> flower and <span class="math inline">\(y_i\)</span> is <span class="math inline">\(0\)</span> if it is of species setoa and <span class="math inline">\(1\)</span> if it is of species versicolor. Then, we can learn parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> by minimizing a mean squared error loss function using gradient descent:</p>
-<div id="7651f355" class="cell" data-execution_count="8">
+</div>
+<div id="3829a226" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -346,11 +358,9 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>a = -5.425312673470728, b = -14.358298478932687</code></pre>
 </div>
-</div>
-<div id="ee9e80cb" class="cell" data-execution_count="9">
+<p>The prediction for all inputs overlaying the data:</p>
+<div id="4875f9ba" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -359,143 +369,71 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="48bbab0a" class="cell" data-execution_count="10">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="simplemodels_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="more-features" class="level3">
 <h3 class="anchored" data-anchor-id="more-features">More Features</h3>
-<div id="90761aa7" class="cell" data-execution_count="11">
+<p>What if we use all four measurements (input features) to do the same classification task?</p>
+<p><span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( w^\top x + b\right)}, \]</span></p>
+<p>where <span class="math inline">\(w \in \mathbb R^4\)</span>.</p>
+<p>The mean squared error loss is not convex in the parameters. We use gradient descent to optimize this function.</p>
+<div id="e3ee119a" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>w = [ 1.28242961  2.34395344 -2.92653233 -1.37780961], b = 4.78431161250536</code></pre>
 </div>
 </div>
-<div id="3595033e" class="cell" data-execution_count="12">
+<p>You can check that this classifier works perfectly on the data. This result is unsurprising. Take a look at the data:</p>
+<div id="b5067526" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="simplemodels_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="simplemodels_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-12-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-12-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-12-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-12-output-6.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="5c3bfef5" class="cell" data-execution_count="13">
-<div class="cell-output cell-output-stdout">
-<pre><code> pred   truth
- 0.004  0
- 0.015  0
- 0.009  0
- 0.024  0
- 0.003  0
- 0.003  0
- 0.010  0
- 0.007  0
- 0.036  0
- 0.014  0
- 0.002  0
- 0.012  0
- 0.015  0
- 0.012  0
- 0.000  0
- 0.000  0
- 0.001  0
- 0.004  0
- 0.002  0
- 0.003  0
- 0.008  0
- 0.004  0
- 0.002  0
- 0.021  0
- 0.029  0
- 0.024  0
- 0.013  0
- 0.004  0
- 0.004  0
- 0.022  0
- 0.025  0
- 0.006  0
- 0.001  0
- 0.000  0
- 0.016  0
- 0.005  0
- 0.002  0
- 0.003  0
- 0.022  0
- 0.006  0
- 0.004  0
- 0.103  0
- 0.014  0
- 0.013  0
- 0.010  0
- 0.020  0
- 0.003  0
- 0.014  0
- 0.002  0
- 0.007  0
- 0.982  1
- 0.987  1
- 0.994  1
- 0.997  1
- 0.996  1
- 0.997  1
- 0.993  1
- 0.980  1
- 0.992  1
- 0.994  1
- 0.995  1
- 0.989  1
- 0.993  1
- 0.997  1
- 0.958  1
- 0.977  1
- 0.997  1
- 0.988  1
- 0.999  1
- 0.991  1
- 0.998  1
- 0.980  1
- 0.999  1
- 0.997  1
- 0.985  1
- 0.984  1
- 0.996  1
- 0.998  1
- 0.996  1
- 0.953  1
- 0.991  1
- 0.987  1
- 0.983  1
- 1.000  1
- 0.998  1
- 0.989  1
- 0.991  1
- 0.997  1
- 0.987  1
- 0.995  1
- 0.998  1
- 0.995  1
- 0.990  1
- 0.982  1
- 0.995  1
- 0.988  1
- 0.992  1
- 0.988  1
- 0.936  1
- 0.991  1</code></pre>
-</div>
-</div>
+<p>You can draw lines that divide setosa and versicolor using just two features, never mind all four at the same time. This property means that our model was destined to succeed perfectly for this partial classification. What do you expect will happen if we wanted to distinguish between versicolor and virginica? Would this model distinguish between all three?</p>
 </section>
 </section>
 <section id="whats-next" class="level2">
 <h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
 <p>Everything looks reasonable so far. We had data, we proposed parametrized models, and we fit the model parameters to the data using optimization and we looked at the results. We ignored the many challenges when working on real problems:</p>
 <ol type="1">
+<li>What should the initial guess be for gradient descent? What should the step-size be?</li>
 <li>How do you evaluate models when you can’t visually inspect the models outputs and ground truth?</li>
 <li>How will you obtain gradients for more complex models?</li>
 <li>What happens to gradient descent when you have millions of data points?</li>
