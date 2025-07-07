@@ -7,12 +7,12 @@ def grad_f(a, b):
     """Gradient of f"""
     e = y - 1/(1+np.exp(a*x-b*np.ones(100)))
     act = 1/(1+np.exp(a*x-b*np.ones(100)))
-    grad_x = -np.sum(e * act * (1-act) * x)
-    grad_y = -np.sum(e)
-    return np.array([grad_x, grad_y])
+    grad_x = np.sum(e * act * (1-act) * x)
+    grad_y = -np.sum(e * act * (1-act))
+    return np.array([grad_x, grad_y])*1/100
 
 # Steepest Descent
-def steepest_descent(start, alpha=0.005,tol=1e-6, max_iter=5000):
+def steepest_descent(start, alpha=0.1,tol=1e-6, max_iter=50000):
     theta = np.array(start, dtype=float)
     iterates = [theta.copy()]
     optimal_values=[f(theta[0],theta[1])]
