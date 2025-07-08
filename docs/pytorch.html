@@ -211,7 +211,7 @@ window.Quarto = {
 <section id="tensors" class="level2">
 <h2 class="anchored" data-anchor-id="tensors">Tensors</h2>
 <p>Tensors in <code>torch</code> are <span class="math inline">\(n\)</span>-dimensional array objects, similar to <code>numpy</code> arrays. In fact, you can easily switch:</p>
-<div id="eed8eb98" class="cell" data-execution_count="1">
+<div id="0f4e5d15" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -224,7 +224,7 @@ window.Quarto = {
 <section id="autograd" class="level2">
 <h2 class="anchored" data-anchor-id="autograd">Autograd</h2>
 <p>Deep learning is nearly impossible without the ability to automatically differentiate models. Before that, demonstrating the value of a new model required careful derivation and implementation of its gradients. Now, all of that work has been automated away.</p>
-<div id="9744e395" class="cell" data-execution_count="2">
+<div id="73cc3f30" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> torch.Tensor([<span class="fl">0.8762</span>])</span>
@@ -244,8 +244,12 @@ torch grad:  0.20754991471767426  manual gradient:  0.20754991471767426</code></
 </section>
 <section id="application-linear-model" class="level2">
 <h2 class="anchored" data-anchor-id="application-linear-model">Application: Linear Model</h2>
-<p>We fit a linear model to scalar input-output data in the <a href="simplemodels.html">Simple Models</a> lesson using gradient descent ‘by hand’. Here, we use <code>PyTorch</code>.</p>
-<div id="8278bcfa" class="cell" data-execution_count="3">
+<p>We fit a linear model to scalar input-output data in the <a href="simplemodels.html">simple models</a> lesson using gradient descent ‘by hand’. Here, we use <code>PyTorch</code>. There are two differences from the pattern we saw at the end of the lesson on <a href="simplemodels.html#more-features">simple models</a>:</p>
+<ol type="1">
+<li>The model is defined separately from the loss.</li>
+<li>We don’t implement a gradient function, autodiff will derive it for us.</li>
+</ol>
+<div id="a0d9366f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Plot iterates and loss under GD using torch</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
@@ -308,16 +312,16 @@ torch grad:  0.20754991471767426  manual gradient:  0.20754991471767426</code></
 <pre><code>torch.Size([100, 1])
 torch.Size([100, 1])
 Start training: 
-Epoch 500/5000 - Loss: 0.3685
-Epoch 1000/5000 - Loss: 0.2599
-Epoch 1500/5000 - Loss: 0.2564
-Epoch 2000/5000 - Loss: 0.2563
-Epoch 2500/5000 - Loss: 0.2563
-Epoch 3000/5000 - Loss: 0.2563
-Epoch 3500/5000 - Loss: 0.2563
-Epoch 4000/5000 - Loss: 0.2563
-Epoch 4500/5000 - Loss: 0.2563
-Epoch 5000/5000 - Loss: 0.2563</code></pre>
+Epoch 500/5000 - Loss: 0.4852
+Epoch 1000/5000 - Loss: 0.2297
+Epoch 1500/5000 - Loss: 0.2212
+Epoch 2000/5000 - Loss: 0.2210
+Epoch 2500/5000 - Loss: 0.2210
+Epoch 3000/5000 - Loss: 0.2210
+Epoch 3500/5000 - Loss: 0.2210
+Epoch 4000/5000 - Loss: 0.2210
+Epoch 4500/5000 - Loss: 0.2210
+Epoch 5000/5000 - Loss: 0.2210</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>

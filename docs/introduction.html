@@ -184,17 +184,16 @@ window.Quarto = {
 <li><code>scikit-learn</code>: source some classic datasets</li>
 </ol>
 <p>The following command uses <code>pip</code> to install these <code>python</code> packages:</p>
-<pre><code># Maybe use a virtual environment; see below
-pip install torch numpy matplotlib tqdm pandas scikit-learn</code></pre>
+<pre><code>pip install torch numpy matplotlib tqdm pandas scikit-learn</code></pre>
 <section id="virtual-environment" class="level3">
 <h3 class="anchored" data-anchor-id="virtual-environment">Virtual Environment</h3>
 <p>Virtual environments allow you to install a custom set of packages with custom package versions for a project.</p>
 <p>Inside the <code>dlcourse</code> directory, run</p>
 <pre><code>python -m venv code-venv</code></pre>
 <p>to create a blank virtual environment.</p>
-<p>Activate it, and then install packages. Upon activate, the command line prompt changes to start with the name of the virtual environment. Here, it would be <code>(code-venv)</code>:</p>
+<p>Activate it, and then install packages. Upon activation, the command line prompt changes to start with the name of the virtual environment. Here, it would be <code>(code-venv)</code>:</p>
 <pre><code>source code-venv/bin/activate
-pip install torch numpy matplotlib tqdm pandas</code></pre>
+pip install torch numpy matplotlib tqdm pandas scikit-learn</code></pre>
 <p>When you are done, you can run <code>deactivate</code> to return to the default global environment.</p>
 </section>
 </section>
