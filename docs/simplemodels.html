@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -134,7 +134,7 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -165,10 +165,87 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./simplemodels.html">Basics</a></li><li class="breadcrumb-item"><a href="./simplemodels.html">Simple Models</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simplemodels.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Simple Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pytorch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PyTorch</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Layer Perceptrons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -191,7 +268,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./simplemodels.html">Basics</a></li><li class="breadcrumb-item"><a href="./simplemodels.html">Simple Models</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Simple Models</h1>
 </div>
@@ -213,7 +290,7 @@ window.Quarto = {
 <section id="linear-models-regression" class="level2">
 <h2 class="anchored" data-anchor-id="linear-models-regression">Linear Models &amp; Regression</h2>
 <p>Suppose we have noisy data <span class="math inline">\((x_i,y_i)_{1,\dots,N}\)</span> that corresponds to a true function <span class="math inline">\(f(x)= 4 x + 5\)</span>. It looks like:</p>
-<div id="2fbcb97e" class="cell" data-execution_count="1">
+<div id="07fb8c27" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -225,7 +302,7 @@ window.Quarto = {
 <p>Our goal is to identify <span class="math inline">\(f(x)\)</span> from data <span class="math inline">\((x_i,y_i)_{1,\dots,N}\)</span>.</p>
 <p>We can cheat a bit and claim that the relationship is given by a linear model: <span class="math display">\[ f(x) = a x +b.\]</span></p>
 <p>Given a datum, say <span class="math inline">\((x_2,y_2)\)</span>, our guess for <span class="math inline">\(f(x_2)\)</span> is <span class="math inline">\(a x_2 +b\)</span>. If we know that <span class="math inline">\(a=4\)</span> and <span class="math inline">\(b=5\)</span>, we would get <span class="math inline">\(y_2 = f(x_2)\)</span> (ignoring noise). If we don’t have a good guess, then <span class="math inline">\(f(x_2)\)</span> may not be close to <span class="math inline">\(y_2\)</span>:</p>
-<div id="53d5cd89" class="cell" data-execution_count="2">
+<div id="e1dde52b" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -241,7 +318,7 @@ window.Quarto = {
 <p><span class="math display">\[ \theta^\star = \arg \min_\theta L(\theta). \]</span></p>
 <p>The theory for this objective function is especially nice so we can derive a closed-form solution for the minimizer:</p>
 <p><span class="math display">\[ \theta^\star = \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{X}^\top  \mathbf{y}.\]</span></p>
-<div id="f2eefc9e" class="cell" data-execution_count="3">
+<div id="4942cbc2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Closed-form solution compare prediction with true model</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Xt <span class="op">=</span> np.stack([x,np.ones(<span class="dv">100</span>)])  <span class="co"># build transpose of X </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span>  np.linalg.inv(Xt <span class="op">@</span> Xt.T) <span class="op">@</span> (Xt <span class="op">@</span> y.T ) <span class="co"># Implement the equation above using numpy (np)</span></span>
@@ -259,7 +336,7 @@ window.Quarto = {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>a = 3.9420582992888913, b = 5.042062276019557</code></pre>
+<pre><code>a = 4.019542649181534, b = 4.966594728421707</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -275,7 +352,7 @@ window.Quarto = {
 <p><span class="math display">\[\theta_{k+1} = \theta_{k} - \alpha  \nabla L(\theta_k),\]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> is a step size and <span class="math inline">\(\nabla L\)</span> is the gradient of the Loss function.</p>
 <p>The iterates of <span class="math inline">\(\theta\)</span> and the loss value are given below.</p>
-<div id="a467848f" class="cell" data-execution_count="4">
+<div id="e77daf0f" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -284,7 +361,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>a = 3.942058276074228, b = 5.042062276019556</code></pre>
+<pre><code>a = 4.019542628329401, b = 4.966594728421707</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -298,10 +375,10 @@ window.Quarto = {
 </section>
 <section id="logistic-regression" class="level2">
 <h2 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h2>
-<p>Regression tries to find a relationship between two continuous variables. In many problems, the input to a model may be continuous, but the output we want is discrete valued. For example, our body temperature is discrete valued, but we may want to use it to decide whether to call in sick or not.</p>
+<p>Regression tries to find a relationship between two continuous variables. In many problems, the input to a model may be continuous, but the output we want is discrete valued. For example, our body temperature is continuous valued, but we may want to use it to decide whether to call in sick or not.</p>
 <p>We can still use continuous regression, but with the trick that outputs are integer valued, and our models are biased to producing nearly-integral outputs for most inputs.</p>
 <p>For example, consider the standard logistic function: <span class="math display">\[f(x) = \frac{1}{1+e^{-x}}.\]</span> Away from <span class="math inline">\(x=0\)</span>, the value is close to either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. This number is often interpreted as a probability of belonging to a class.</p>
-<div id="7d19c86a" class="cell" data-execution_count="5">
+<div id="b7e86ed3" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -326,7 +403,7 @@ window.Quarto = {
 <li>petal width</li>
 </ol>
 <p>Here, we will solve a partial version of this classification problem. We will try to predict whether an iris belongs to species setosa or versicolor from the petal length. The data look like:</p>
-<div id="26f42cd6" class="cell" data-execution_count="6">
+<div id="e6b14753" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -338,7 +415,7 @@ window.Quarto = {
 <p>The data suggest we can use an <span class="math inline">\(S\)</span>-shaped curve to map petal length to a number that we interpret as the probability of the petal belonging to species versicolor.</p>
 <p>The model is <span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( a x + b\right)}. \]</span></p>
 <p>We have data <span class="math inline">\((x_i,y_i)\)</span> where <span class="math inline">\(x_i\)</span> is the petal length of the <span class="math inline">\(i^{\mathrm{th}}\)</span> flower and <span class="math inline">\(y_i\)</span> is <span class="math inline">\(0\)</span> if it is of species setosa and <span class="math inline">\(1\)</span> if it is of species versicolor. Then, we can learn parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> by minimizing a mean squared error loss function using gradient descent:</p>
-<div id="0ded5ba3" class="cell" data-execution_count="7">
+<div id="48081e82" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -350,7 +427,7 @@ window.Quarto = {
 <pre><code>a = -3.2454446383309143, b = -8.2278103097029</code></pre>
 </div>
 </div>
-<div id="aa26b572" class="cell" data-execution_count="8">
+<div id="70ced29b" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -360,7 +437,7 @@ window.Quarto = {
 </div>
 </div>
 <p>The prediction for all inputs overlaying the data:</p>
-<div id="6125020c" class="cell" data-execution_count="9">
+<div id="932a651b" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -376,7 +453,7 @@ window.Quarto = {
 <p><span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( w^\top x + b\right)}, \]</span></p>
 <p>where <span class="math inline">\(w \in \mathbb R^4\)</span>.</p>
 <p>The mean squared error loss is not convex in the parameters. We use gradient descent to optimize this function.</p>
-<div id="9084fcdf" class="cell" data-execution_count="10">
+<div id="e209b46d" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>w = [ 0.47315506  1.7278686  -2.66159651 -1.20674271], b = -0.30153672562670286</code></pre>
 </div>
@@ -395,7 +472,7 @@ window.Quarto = {
 </div>
 <p>Note that a confusion matrix <span class="math inline">\(C\)</span> is such that <span class="math inline">\(C_{i,j}\)</span> is equal to the number of observations known to be in group <span class="math inline">\(i\)</span> and predicted to be in group <span class="math inline">\(j\)</span>.</p>
 <p>You can see that this classifier works perfectly on the data. This result is unsurprising. Take a look at the data:</p>
-<div id="0e65d260" class="cell" data-execution_count="11">
+<div id="9a2964b3" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -441,7 +518,7 @@ window.Quarto = {
 </div>
 <p>You can draw lines that divide setosa and versicolor using just two features, never mind all four at the same time. This property means that our model was destined to succeed perfectly for this partial classification. What do you expect will happen if we wanted to distinguish between versicolor and virginica? Would this model distinguish between all three?</p>
 <p>Let’s try training a classifier to distinguish between versicolor and virginica. We get a solution:</p>
-<div id="24913946" class="cell" data-execution_count="12">
+<div id="36cd3eff" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>w = [ 3.83121395  4.19340142 -6.45287598 -7.70857748], b = -8.566849954768172</code></pre>
 </div>
@@ -459,7 +536,7 @@ window.Quarto = {
 </div>
 </div>
 <p>The results are reasonably good. Let’s look at the code. We load data, define a loss function which contains the model, define a gradient, then train , and finally evaluate the model. This pattern is fairly common.</p>
-<div id="8a635b7a" class="cell" data-execution_count="13">
+<div id="c67ba332" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(iris.feature_names)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(iris.target_names)</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>

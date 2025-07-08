@@ -32,7 +32,7 @@ class MLP(nn.Module):
             nn.Sigmoid(),
             nn.Linear(64, 32),
             nn.Sigmoid(),
-            nn.Linear(32, 3)  # 3 classes
+            nn.Linear(32, 3),  # 3 classes
         )
 
     def forward(self, x):

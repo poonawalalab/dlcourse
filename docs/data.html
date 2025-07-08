@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – Deep Learning Course</title>
+<title>Data – Deep Learning Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -107,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">About</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./data.html">Data</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -173,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link">
+  <a href="./data.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Data</span></a>
   </div>
 </li>
@@ -184,15 +184,30 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-representation-in-pytorch" id="toc-data-representation-in-pytorch" class="nav-link" data-scroll-target="#data-representation-in-pytorch">Data Representation in PyTorch</a></li>
+  <li><a href="#building-custom-datasets" id="toc-building-custom-datasets" class="nav-link" data-scroll-target="#building-custom-datasets">Building Custom Datasets</a></li>
+  <li><a href="#data-transforms-and-augmentation" id="toc-data-transforms-and-augmentation" class="nav-link" data-scroll-target="#data-transforms-and-augmentation">Data Transforms and Augmentation</a></li>
+  <li><a href="#loading-data-with-dataloader" id="toc-loading-data-with-dataloader" class="nav-link" data-scroll-target="#loading-data-with-dataloader">Loading Data with DataLoader</a></li>
+  <li><a href="#best-practices-and-tips" id="toc-best-practices-and-tips" class="nav-link" data-scroll-target="#best-practices-and-tips">Best Practices and Tips</a></li>
+  <li><a href="#case-study-training-a-simple-cnn-on-image-data" id="toc-case-study-training-a-simple-cnn-on-image-data" class="nav-link" data-scroll-target="#case-study-training-a-simple-cnn-on-image-data">Case Study: Training a Simple CNN on Image Data</a></li>
+  <li><a href="#summary-and-resources" id="toc-summary-and-resources" class="nav-link" data-scroll-target="#summary-and-resources">Summary and Resources</a></li>
+  <li><a href="#generalization" id="toc-generalization" class="nav-link" data-scroll-target="#generalization">Generalization</a></li>
+  <li><a href="#train-test-splits" id="toc-train-test-splits" class="nav-link" data-scroll-target="#train-test-splits">Train-Test Splits</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./data.html">Data</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Data</h1>
 </div>
 
 
@@ -209,10 +224,106 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This website contains material for a crash course on working with deep models.</p>
-<p><strong>Instructors</strong>: Hasan A. Poonawala, Joseph Kershaw.</p>
+<p>Outline: Working with Data in PyTorch for Deep Learning</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Overview of the importance of data handling in deep learning workflows using PyTorch.</p>
+<ul>
+<li><p>Why Data Handling Matters</p></li>
+<li><p>Explain how data quality, preprocessing, and loading impact model performance and training efficiency.</p></li>
+<li><p>PyTorch’s Data Ecosystem</p></li>
+<li><p>Introduce key PyTorch tools: Tensor, Dataset, DataLoader, and Transforms.</p></li>
+</ul>
+</section>
+<section id="data-representation-in-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="data-representation-in-pytorch">Data Representation in PyTorch</h2>
+<p>Understanding how data is stored and manipulated using Tensors.</p>
+<ul>
+<li><p>Tensors: The Basic Building Blocks</p></li>
+<li><p>Describe how PyTorch uses torch.Tensor as its core data structure, and how it differs from NumPy arrays.</p></li>
+<li><p>Converting Data to Tensors</p></li>
+<li><p>Show examples of converting images, text, and tabular data into tensors using torch.from_numpy, torch.tensor, etc.</p></li>
+</ul>
+</section>
+<section id="building-custom-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="building-custom-datasets">Building Custom Datasets</h2>
+<p>Creating flexible data loading pipelines using torch.utils.data.Dataset.</p>
+<ul>
+<li><p>Using Built-in Datasets</p></li>
+<li><p>Demonstrate using datasets like MNIST or CIFAR-10 from torchvision.datasets.</p></li>
+<li><p>Writing a Custom Dataset Class</p></li>
+<li><p>Guide on implementing a Dataset subclass for your own data formats (e.g., CSVs, image folders).</p></li>
+<li><p>Handling Labels and Targets</p></li>
+<li><p>Explain label encoding, class balancing, and how labels are represented in classification/regression problems.</p></li>
+</ul>
+</section>
+<section id="data-transforms-and-augmentation" class="level2">
+<h2 class="anchored" data-anchor-id="data-transforms-and-augmentation">Data Transforms and Augmentation</h2>
+<p>Improving generalization and performance through preprocessing.</p>
+<ul>
+<li><p>Common Image Transforms</p></li>
+<li><p>Introduce torchvision.transforms and show examples (e.g., resize, crop, normalization).</p></li>
+<li><p>Augmentation Strategies</p></li>
+<li><p>Discuss real-time augmentation techniques (e.g., flipping, rotation) and their impact.</p></li>
+<li><p>Composing Transforms</p></li>
+<li><p>Use transforms.Compose() to build transformation pipelines.</p></li>
+</ul>
+</section>
+<section id="loading-data-with-dataloader" class="level2">
+<h2 class="anchored" data-anchor-id="loading-data-with-dataloader">Loading Data with DataLoader</h2>
+<p>Efficiently feeding data to your model during training.</p>
+<ul>
+<li><p>Batching and Shuffling</p></li>
+<li><p>Explain the importance of batch_size, shuffle, and how to configure them.</p></li>
+<li><p>Using Multiple Workers</p></li>
+<li><p>Discuss the num_workers argument for parallel data loading.</p></li>
+<li><p>Iterating Over DataLoader</p></li>
+<li><p>Show how to use a for loop or an iterator to retrieve batches for training/validation.</p></li>
+</ul>
+</section>
+<section id="best-practices-and-tips" class="level2">
+<h2 class="anchored" data-anchor-id="best-practices-and-tips">Best Practices and Tips</h2>
+<p>Making your data pipeline robust, efficient, and debug-friendly.</p>
+<ul>
+<li><p>Sanity Checks and Debugging</p></li>
+<li><p>Tips for visualizing a few samples, checking shapes and label correctness.</p></li>
+<li><p>Performance Considerations</p></li>
+<li><p>Preloading, caching, avoiding memory bottlenecks.</p></li>
+<li><p>When Things Go Wrong</p></li>
+<li><p>Common errors like shape mismatches, label misalignment, or data not being on the right device.</p></li>
+</ul>
+</section>
+<section id="case-study-training-a-simple-cnn-on-image-data" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-training-a-simple-cnn-on-image-data">Case Study: Training a Simple CNN on Image Data</h2>
+<p>Walkthrough of building a full data pipeline and training loop using a real dataset.</p>
+<ul>
+<li><p>Dataset and Transform Pipeline</p></li>
+<li><p>Apply concepts from earlier sections to build a dataset and transform pipeline.</p></li>
+<li><p>Training with DataLoader</p></li>
+<li><p>Show model training code that integrates with DataLoader output.</p></li>
+<li><p>Visualizing Inputs and Predictions</p></li>
+<li><p>Optional: add plots or sample outputs for interpretability.</p></li>
+</ul>
+</section>
+<section id="summary-and-resources" class="level2">
+<h2 class="anchored" data-anchor-id="summary-and-resources">Summary and Resources</h2>
+<p>Recap key concepts and provide further reading.</p>
+<ul>
+<li><p>Key Takeaways</p></li>
+<li><p>Bullet points summarizing what users should now understand.</p></li>
+<li><p>Further Reading and Links</p></li>
+<li><p>Link to official PyTorch tutorials, dataset libraries, and helpful tools (e.g., Albumentations, HuggingFace Datasets).</p></li>
+</ul>
+<p>Let me know if you’d like the outline tailored to a specific audience (e.g., undergraduates, researchers, engineers) or style (e.g., interactive tutorials, formal documentation).</p>
+</section>
+<section id="generalization" class="level2">
+<h2 class="anchored" data-anchor-id="generalization">Generalization</h2>
+</section>
+<section id="train-test-splits" class="level2">
+<h2 class="anchored" data-anchor-id="train-test-splits">Train-Test Splits</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
