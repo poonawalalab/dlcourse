@@ -3,6 +3,7 @@ import numpy as np
 import string
 import random
 import torch
+
 from torch.utils.data import DataLoader, Dataset, Subset
 
 class RegressionDataset(Dataset):
@@ -15,8 +16,8 @@ class RegressionDataset(Dataset):
         target_labels = [c for c in df_data.columns if c.startswith('Target')]
         df_inputs = df_data.drop(target_labels,axis=1)
         df_targets = df_data[target_labels]
-        self._tensor_inputs = torch.tensor(df_inputs.values).unsqueeze(1).float()
-        self._tensor_targets = torch.tensor(df_targets.values).view(-1,1,1).float()
+        self._tensor_inputs = torch.tensor(df_inputs.values).float()
+        self._tensor_targets = torch.tensor(df_targets.values).view(-1,len(target_labels)).float()
         if normalize:
             self.normalize(self._tensor_inputs)
             self.normalize(self._tensor_targets)
