@@ -1,3 +1,5 @@
+## This code classifies versicolor vs virginica using PyTorch
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -6,46 +8,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
 import numpy as np
+from utils import load_two_species
 
 # 1. Load and preprocess data
 iris = load_iris()
 
-def load_two_species(species_pair=(0, 1), *, remap=True):
-    if len(species_pair) != 2:
-        raise ValueError("species_pair must contain exactly two integers (e.g. (0, 2)).")
-    if not all(label in {0, 1, 2} for label in species_pair):
-        raise ValueError("Labels must be chosen from 0, 1, 2.")
-
-    iris = load_iris()
-    X_all, y_all = iris.data, iris.target
-
-    # Boolean mask: keep rows whose label is in species_pair
-    mask = np.isin(y_all, species_pair)
-    X, y = X_all[mask], y_all[mask]
-
-    if remap:
-        # Map the first chosen label → 0, the second → 1
-        label_map = {species_pair[0]: 0, species_pair[1]: 1}
-        y = np.vectorize(label_map.get)(y)
-
-    return X, y
 iris_species_1 = 1
 iris_species_2 = 2
 
 X, y = load_two_species((iris_species_1, iris_species_2))
-
-# scaler = StandardScaler()
-# X = scaler.fit_transform(X)
-
-# print("X:", X)
-# print("pred", (np.sum(X[50:,:],axis=0)-np.sum(X[:50],axis=0))*1/800)
 
 X_train = torch.tensor(X, dtype=torch.float32)
 y_train = torch.tensor(y, dtype=torch.float32).unsqueeze(1)
 
 
 
-# 2. Define MLP model
+# 2. Define MLP model: Perceptron = linear + sigmoid
 class MLP(nn.Module):
     def __init__(self):
         super().__init__()

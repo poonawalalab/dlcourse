@@ -290,7 +290,7 @@ window.Quarto = {
 <section id="linear-models-regression" class="level2">
 <h2 class="anchored" data-anchor-id="linear-models-regression">Linear Models &amp; Regression</h2>
 <p>Suppose we have noisy data <span class="math inline">\((x_i,y_i)_{1,\dots,N}\)</span> that corresponds to a true function <span class="math inline">\(f(x)= 4 x + 5\)</span>. It looks like:</p>
-<div id="07fb8c27" class="cell" data-execution_count="1">
+<div id="e3b49fe2" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -302,7 +302,7 @@ window.Quarto = {
 <p>Our goal is to identify <span class="math inline">\(f(x)\)</span> from data <span class="math inline">\((x_i,y_i)_{1,\dots,N}\)</span>.</p>
 <p>We can cheat a bit and claim that the relationship is given by a linear model: <span class="math display">\[ f(x) = a x +b.\]</span></p>
 <p>Given a datum, say <span class="math inline">\((x_2,y_2)\)</span>, our guess for <span class="math inline">\(f(x_2)\)</span> is <span class="math inline">\(a x_2 +b\)</span>. If we know that <span class="math inline">\(a=4\)</span> and <span class="math inline">\(b=5\)</span>, we would get <span class="math inline">\(y_2 = f(x_2)\)</span> (ignoring noise). If we don’t have a good guess, then <span class="math inline">\(f(x_2)\)</span> may not be close to <span class="math inline">\(y_2\)</span>:</p>
-<div id="e1dde52b" class="cell" data-execution_count="2">
+<div id="bc1b0a84" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -318,7 +318,7 @@ window.Quarto = {
 <p><span class="math display">\[ \theta^\star = \arg \min_\theta L(\theta). \]</span></p>
 <p>The theory for this objective function is especially nice so we can derive a closed-form solution for the minimizer:</p>
 <p><span class="math display">\[ \theta^\star = \left(\mathbf{X}^\top \mathbf{X}\right)^{-1} \mathbf{X}^\top  \mathbf{y}.\]</span></p>
-<div id="4942cbc2" class="cell" data-execution_count="3">
+<div id="5469f333" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Closed-form solution compare prediction with true model</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Xt <span class="op">=</span> np.stack([x,np.ones(<span class="dv">100</span>)])  <span class="co"># build transpose of X </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span>  np.linalg.inv(Xt <span class="op">@</span> Xt.T) <span class="op">@</span> (Xt <span class="op">@</span> y.T ) <span class="co"># Implement the equation above using numpy (np)</span></span>
@@ -336,7 +336,7 @@ window.Quarto = {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>a = 4.019542649181534, b = 4.966594728421707</code></pre>
+<pre><code>a = 3.912437593039594, b = 4.998100325639219</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -352,16 +352,16 @@ window.Quarto = {
 <p><span class="math display">\[\theta_{k+1} = \theta_{k} - \alpha  \nabla L(\theta_k),\]</span></p>
 <p>where <span class="math inline">\(\alpha\)</span> is a step size and <span class="math inline">\(\nabla L\)</span> is the gradient of the Loss function.</p>
 <p>The iterates of <span class="math inline">\(\theta\)</span> and the loss value are given below.</p>
-<div id="e77daf0f" class="cell" data-execution_count="4">
+<div id="3a48bb54" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-stdout">
+<pre><code>a = 4.006384632625632, b = 5.005149393190814</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="simplemodels_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="simplemodels_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>a = 4.019542628329401, b = 4.966594728421707</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -378,7 +378,7 @@ window.Quarto = {
 <p>Regression tries to find a relationship between two continuous variables. In many problems, the input to a model may be continuous, but the output we want is discrete valued. For example, our body temperature is continuous valued, but we may want to use it to decide whether to call in sick or not.</p>
 <p>We can still use continuous regression, but with the trick that outputs are integer valued, and our models are biased to producing nearly-integral outputs for most inputs.</p>
 <p>For example, consider the standard logistic function: <span class="math display">\[f(x) = \frac{1}{1+e^{-x}}.\]</span> Away from <span class="math inline">\(x=0\)</span>, the value is close to either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. This number is often interpreted as a probability of belonging to a class.</p>
-<div id="b7e86ed3" class="cell" data-execution_count="5">
+<div id="f515de02" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -403,7 +403,7 @@ window.Quarto = {
 <li>petal width</li>
 </ol>
 <p>Here, we will solve a partial version of this classification problem. We will try to predict whether an iris belongs to species setosa or versicolor from the petal length. The data look like:</p>
-<div id="e6b14753" class="cell" data-execution_count="6">
+<div id="e8ec651d" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -412,10 +412,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The data suggest we can use an <span class="math inline">\(S\)</span>-shaped curve to map petal length to a number that we interpret as the probability of the petal belonging to species versicolor.</p>
-<p>The model is <span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( a x + b\right)}. \]</span></p>
-<p>We have data <span class="math inline">\((x_i,y_i)\)</span> where <span class="math inline">\(x_i\)</span> is the petal length of the <span class="math inline">\(i^{\mathrm{th}}\)</span> flower and <span class="math inline">\(y_i\)</span> is <span class="math inline">\(0\)</span> if it is of species setosa and <span class="math inline">\(1\)</span> if it is of species versicolor. Then, we can learn parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> by minimizing a mean squared error loss function using gradient descent:</p>
-<div id="48081e82" class="cell" data-execution_count="7">
+<p>We assign distinct integer variables to the two classes, namely <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>:</p>
+<div id="dbd528b0" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -423,21 +421,31 @@ window.Quarto = {
 </figure>
 </div>
 </div>
+</div>
+<p>The data suggest we can use an <span class="math inline">\(S\)</span>-shaped curve to map petal length to a number that we interpret as the probability of the petal belonging to species versicolor.</p>
+<p>The model is <span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( a x + b\right)}. \]</span></p>
+<p>We have data <span class="math inline">\((x_i,y_i)\)</span> where <span class="math inline">\(x_i\)</span> is the petal length of the <span class="math inline">\(i^{\mathrm{th}}\)</span> flower and <span class="math inline">\(y_i\)</span> is <span class="math inline">\(0\)</span> if it is of species setosa and <span class="math inline">\(1\)</span> if it is of species versicolor. Then, we can learn parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> by minimizing a mean squared error loss function using gradient descent:</p>
+<div id="e30e0add" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>a = -3.2454446383309143, b = -8.2278103097029</code></pre>
 </div>
-</div>
-<div id="70ced29b" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="simplemodels_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="simplemodels_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simplemodels_files/figure-html/cell-9-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The prediction for all inputs overlaying the data:</p>
-<div id="932a651b" class="cell" data-execution_count="9">
+<div id="2b5ac9b8" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -453,7 +461,7 @@ window.Quarto = {
 <p><span class="math display">\[ p(\text{versicolor} | x) = \frac{1}{1 + e^\left( w^\top x + b\right)}, \]</span></p>
 <p>where <span class="math inline">\(w \in \mathbb R^4\)</span>.</p>
 <p>The mean squared error loss is not convex in the parameters. We use gradient descent to optimize this function.</p>
-<div id="e209b46d" class="cell" data-execution_count="10">
+<div id="94e6e19d" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>w = [ 0.47315506  1.7278686  -2.66159651 -1.20674271], b = -0.30153672562670286</code></pre>
 </div>
@@ -472,7 +480,7 @@ window.Quarto = {
 </div>
 <p>Note that a confusion matrix <span class="math inline">\(C\)</span> is such that <span class="math inline">\(C_{i,j}\)</span> is equal to the number of observations known to be in group <span class="math inline">\(i\)</span> and predicted to be in group <span class="math inline">\(j\)</span>.</p>
 <p>You can see that this classifier works perfectly on the data. This result is unsurprising. Take a look at the data:</p>
-<div id="9a2964b3" class="cell" data-execution_count="11">
+<div id="a6f7e872" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -518,7 +526,7 @@ window.Quarto = {
 </div>
 <p>You can draw lines that divide setosa and versicolor using just two features, never mind all four at the same time. This property means that our model was destined to succeed perfectly for this partial classification. What do you expect will happen if we wanted to distinguish between versicolor and virginica? Would this model distinguish between all three?</p>
 <p>Let’s try training a classifier to distinguish between versicolor and virginica. We get a solution:</p>
-<div id="36cd3eff" class="cell" data-execution_count="12">
+<div id="2f4a9053" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>w = [ 3.83121395  4.19340142 -6.45287598 -7.70857748], b = -8.566849954768172</code></pre>
 </div>
@@ -536,79 +544,104 @@ window.Quarto = {
 </div>
 </div>
 <p>The results are reasonably good. Let’s look at the code. We load data, define a loss function which contains the model, define a gradient, then train , and finally evaluate the model. This pattern is fairly common.</p>
-<div id="c67ba332" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(iris.feature_names)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(iris.target_names)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the data, only two species</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>iris_species_1 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>iris_species_2 <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> load_two_species((iris_species_1, iris_species_2))</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective function and its gradient </span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(w, b):</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> y <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w<span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.linalg.norm(e)<span class="op">/</span><span class="dv">100</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_f(w, b):</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gradient of f"""</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> y <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w<span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    act <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w<span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    grad_w <span class="op">=</span> np.zeros(<span class="dv">4</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">4</span>):</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        grad_w[i] <span class="op">=</span> np.<span class="bu">sum</span>(e <span class="op">*</span> act <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>act) <span class="op">*</span> X[:,i])</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    grad_b <span class="op">=</span> <span class="op">-</span>np.<span class="bu">sum</span>(e <span class="op">*</span>act <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>act))</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.concatenate([grad_w, np.array([grad_b])])<span class="op">*</span><span class="dv">1</span><span class="op">/</span><span class="dv">100</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Steepest Descent</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> steepest_descent(start, alpha<span class="op">=</span><span class="fl">0.1</span>,tol<span class="op">=</span><span class="fl">1e-6</span>, max_iter<span class="op">=</span><span class="dv">150000</span>):</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> np.array(start, dtype<span class="op">=</span><span class="bu">float</span>)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    iterates <span class="op">=</span> [theta.copy()]</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    optimal_values<span class="op">=</span>[f(theta[:<span class="dv">4</span>],theta[<span class="dv">4</span>])]</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(max_iter):</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        grad <span class="op">=</span> grad_f(theta[:<span class="dv">4</span>], theta[<span class="dv">4</span>])</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Newton step: x_new = x - H_inv * grad</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">-=</span> alpha<span class="op">*</span>grad</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        iterates.append(theta.copy())</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        optimal_values.append(f(theta[:<span class="dv">4</span>],theta[<span class="dv">4</span>]))</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convergence check</span></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.linalg.norm(grad) <span class="op">&lt;</span> tol:</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta, iterates, optimal_values</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Gradient Descent</span></span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>start_point <span class="op">=</span> np.array([<span class="fl">1.0</span>,<span class="fl">1.0</span>,<span class="op">-</span><span class="fl">5.0</span>,<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">10.0</span>])<span class="op">*</span><span class="fl">0.0</span></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted first grad: [0.04075 0.01275 0.08075 0.04375]</span></span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>optimum, iterates, optimal_values <span class="op">=</span> steepest_descent(start_point)</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract iterate points for plotting</span></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>iterates <span class="op">=</span> np.array(iterates)</span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"w = </span><span class="sc">{</span>iterates[<span class="op">-</span><span class="dv">1</span>,:<span class="dv">4</span>]<span class="sc">}</span><span class="ss">, b = </span><span class="sc">{</span>iterates[<span class="op">-</span><span class="dv">1</span>,<span class="dv">4</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">len</span>(optimal_values)),optimal_values,  <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"iterates (k)"</span>)</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="ss">f"Loss"</span>)</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> iterates[<span class="op">-</span><span class="dv">1</span>,:<span class="dv">4</span>] </span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> iterates[<span class="op">-</span><span class="dv">1</span>,<span class="dv">4</span>]</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co">#w=np.array([0.0,0.0,-5.4,0.0])</span></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="co">#b=-14</span></span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w <span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="co"># sum = 0</span></span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="co"># print(" pred   truth")</span></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="co"># for i in range(0,100):</span></span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="co">#   print(f"{y_pred[i]: .3f} {y[i]: .0f}")</span></span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="co">#   if abs(y_pred[i] - y[i])&lt;0.1:</span></span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="co">#       sum+=1</span></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"sum: {sum}")</span></span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y,np.<span class="bu">round</span>(y_pred))</span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion Matrix:</span><span class="ch">\n</span><span class="st">"</span>,cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a528083b" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Custom gradient descent to solve versicolor vs virginica classification using only four feature</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_two_species(species_pair<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="op">*</span>, remap<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(species_pair) <span class="op">!=</span> <span class="dv">2</span>:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"species_pair must contain exactly two integers (e.g. (0, 2))."</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(label <span class="kw">in</span> {<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>} <span class="cf">for</span> label <span class="kw">in</span> species_pair):</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Labels must be chosen from 0, 1, 2."</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    iris <span class="op">=</span> load_iris()</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    X_all, y_all <span class="op">=</span> iris.data, iris.target</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Boolean mask: keep rows whose label is in species_pair</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> np.isin(y_all, species_pair)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> X_all[mask], y_all[mask]</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> remap:</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Map the first chosen label → 0, the second → 1</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        label_map <span class="op">=</span> {species_pair[<span class="dv">0</span>]: <span class="dv">0</span>, species_pair[<span class="dv">1</span>]: <span class="dv">1</span>}</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.vectorize(label_map.get)(y)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X, y</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset to get names</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> load_iris()</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the data, only two species</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>iris_species_1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>iris_species_2 <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> load_two_species((iris_species_1, iris_species_2))</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective function and its gradient </span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> L(w, b):</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> y <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w<span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.linalg.norm(e)<span class="op">/</span><span class="dv">100</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_L(w, b):</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gradient of f"""</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> y <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w<span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    act <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w<span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    grad_w <span class="op">=</span> np.zeros(<span class="dv">4</span>)</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">4</span>):</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        grad_w[i] <span class="op">=</span> np.<span class="bu">sum</span>(e <span class="op">*</span> act <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>act) <span class="op">*</span> X[:,i])</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    grad_b <span class="op">=</span> <span class="op">-</span>np.<span class="bu">sum</span>(e <span class="op">*</span>act <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>act))</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.concatenate([grad_w, np.array([grad_b])])<span class="op">*</span><span class="dv">1</span><span class="op">/</span><span class="dv">100</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Steepest Descent</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> steepest_descent(start, alpha<span class="op">=</span><span class="fl">0.1</span>,tol<span class="op">=</span><span class="fl">1e-6</span>, max_iter<span class="op">=</span><span class="dv">150000</span>):</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> np.array(start, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    iterates <span class="op">=</span> [theta.copy()]</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    optimal_values<span class="op">=</span>[L(theta[:<span class="dv">4</span>],theta[<span class="dv">4</span>])]</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(max_iter):</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>        grad <span class="op">=</span> grad_L(theta[:<span class="dv">4</span>], theta[<span class="dv">4</span>])</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Newton step: x_new = x - H_inv * grad</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">-=</span> alpha<span class="op">*</span>grad</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>        iterates.append(theta.copy())</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>        optimal_values.append(L(theta[:<span class="dv">4</span>],theta[<span class="dv">4</span>]))</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convergence check</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.linalg.norm(grad) <span class="op">&lt;</span> tol:</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta, iterates, optimal_values</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick an initial point $\theta_0$</span></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>start_point <span class="op">=</span> np.array([<span class="fl">1.0</span>,<span class="fl">1.0</span>,<span class="op">-</span><span class="fl">5.0</span>,<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">10.0</span>])<span class="op">*</span><span class="fl">0.0</span></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Run gradient descent </span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>optimum, iterates, optimal_values <span class="op">=</span> steepest_descent(start_point)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract iterate points for printing and plotting</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>iterates <span class="op">=</span> np.array(iterates)</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"w = </span><span class="sc">{</span>iterates[<span class="op">-</span><span class="dv">1</span>,:<span class="dv">4</span>]<span class="sc">}</span><span class="ss">, b = </span><span class="sc">{</span>iterates[<span class="op">-</span><span class="dv">1</span>,<span class="dv">4</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting: Loss</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">len</span>(optimal_values)),optimal_values,  <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"iterates (k)"</span>)</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="ss">f"Loss"</span>)</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Show Confusion Matrix</span></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> iterates[<span class="op">-</span><span class="dv">1</span>,:<span class="dv">4</span>] </span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> iterates[<span class="op">-</span><span class="dv">1</span>,<span class="dv">4</span>]</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(X <span class="op">@</span> w <span class="op">-</span>b<span class="op">*</span>np.ones(<span class="dv">100</span>)))</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y,np.<span class="bu">round</span>(y_pred))</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion Matrix:</span><span class="ch">\n</span><span class="st">"</span>,cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

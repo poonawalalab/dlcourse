@@ -1,3 +1,10 @@
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+
+# Load the dataset to get names
+iris = load_iris()
+
+
 Xplot = iris.data ## '2'	: petal length (cm) 
 
 for i in range(0,4):

@@ -1,3 +1,5 @@
+## Train a linear model using pytorch
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -7,7 +9,7 @@ import matplotlib.pyplot as plt
 # 1. Create data
 ## First as numpy array
 x = np.linspace(-1,1,100) 
-y_noise_free = 4*x + 5+0.5
+y_noise_free = 4*x + 5
 y = y_noise_free+0.5*np.random.randn(100)
 
 
