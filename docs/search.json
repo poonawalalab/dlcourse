@@ -12,11 +12,11 @@
     ]
   },
   {
-    "objectID": "data.html#introduction",
-    "href": "data.html#introduction",
+    "objectID": "data.html#analyze-data",
+    "href": "data.html#analyze-data",
     "title": "Data",
-    "section": "Introduction",
-    "text": "Introduction\nOverview of the importance of data handling in deep learning workflows using PyTorch.\n\nWhy Data Handling Matters\nExplain how data quality, preprocessing, and loading impact model performance and training efficiency.\nPyTorch’s Data Ecosystem\nIntroduce key PyTorch tools: Tensor, Dataset, DataLoader, and Transforms.",
+    "section": "Analyze Data",
+    "text": "Analyze Data\nUnderstanding the structure and content of your data is paramount to good data-driven models\n\nimport pandas as pd\n\ndf = pd.read_pickle(\"_dlcourse/code/RegressionData.pkl\") #This could be any file format\n\npd.set_option('display.colheader_justify', 'center') #pretty print option\npd.set_option('display.precision',3) #pretty print option\n\nprint(f\"Total number of samples: {len(df)}\")\nprint(\"Top 5 rows:\")\nprint(df.head())\n\nTotal number of samples: 100\nTop 5 rows:\n     A      B      C      D      E      F    Target_0\n0  0.730  5.540  2.244 -1.601 -1.691  0.625   30.720 \n1  0.228 -8.955  2.642  7.802 -0.855 -0.304  -54.216 \n2 -0.835 -1.549  2.271  0.314  0.071 -5.181  -27.621 \n3  0.628 -0.536 -0.007  5.097  1.917 -2.232  -23.083 \n4  0.474  7.877 -0.879  2.787  1.869 -5.179    3.191 \n\n\nIn this example we have 6 inputs (A thru F) and 1 output (Target_0) of all numeric data. While not required, it is useful to create a torch dataset object to manage it. My prefered data flow is shown below, but it is up to you how to structure and handle your own projects.\n\n\n\n\n\nflowchart LR\n  A((Data File)) --&gt; B(Dataset)\n  B --&gt; C((Prepared &lt;br/&gt;Tensors))\n  C --&gt; D(Dataloader)\n  D --&gt; E((Batches))\n  E--&gt; F(Model)",
     "crumbs": [
       "Home",
       "Advanced",
@@ -24,11 +24,11 @@
     ]
   },
   {
-    "objectID": "data.html#data-representation-in-pytorch",
-    "href": "data.html#data-representation-in-pytorch",
+    "objectID": "data.html#create-a-dataset",
+    "href": "data.html#create-a-dataset",
     "title": "Data",
-    "section": "Data Representation in PyTorch",
-    "text": "Data Representation in PyTorch\nUnderstanding how data is stored and manipulated using Tensors.\n\nTensors: The Basic Building Blocks\nDescribe how PyTorch uses torch.Tensor as its core data structure, and how it differs from NumPy arrays.\nConverting Data to Tensors\nShow examples of converting images, text, and tabular data into tensors using torch.from_numpy, torch.tensor, etc.",
+    "section": "Create a Dataset",
+    "text": "Create a Dataset\nWhenever you want to create a custom pytorch Dataset, there are three requirements: Inhereit the Dataset class, create a len function, and create a getitem function.\n\nfrom torch.utils.data import Dataset\n\nclass SomeDataset(Dataset):\n    def __init__(self,...):\n        super().__init__() #calls the init function of super class Dataset\n        ...\n    \n    def __len(self):\n      ...\n    \n    def __getitem__(self, index):\n      ...\n\nYou can include any other function and pass any number of initial class inputs, but these three requirements must be met.\nFor this example we are going to use the RegressionDataset class.\n\nclass RegressionDataset(Dataset):\n    def __init__(self,\n                 data_file:str,\n                 normalize:bool=False,\n                 ):\n        super().__init__()\n\nHere we are creating the class RegressionDataset which is a subclass of torch.utils.data.Dataset. It will take the argument data_file as the path to the regression data, and optionally normalize which will normalize the data from 0 to 1\n\ndf_data:pd.DataFrame = pd.read_pickle(data_file) #opens base PKL file\ntarget_labels = [c for c in df_data.columns if c.startswith('Target')] #Finds all target columns\ndf_inputs = df_data.drop(target_labels,axis=1) # Creates DF of only inputs\ndf_targets = df_data[target_labels] # Creates DF of only targets\n\nHere we have loaded all the data and split up the inputs and the targets.\n\nself._tensor_inputs = torch.tensor(df_inputs.values).float()\nself._tensor_targets = torch.tensor(df_targets.values).view(-1,len(target_labels)).float()\n\nHere is an easy pitfall in data management. This chunk converts the code into tensors and shapes them into the appropriate size.\ndf.values → Converts DataFrame in a numpy array .float() → Converts the Double(float64) tensor into Float(float32) .view(-1,len(target_labels)) → Converts the 1D target tensor into a 2D tensor\nOne thing we can check is the documentation of the layer we are going to be using, Linear. This informs the structure of the data that needs to be fed into the network. We see that the layer takes (*,Hin​), so all of the “action” will be taking place on the last dimension of your inputs.\n\ndef __len__(self):\n    return len(self._tensor_targets)\n\ndef __getitem__(self, index):\n    inputs = self._tensor_inputs[index]\n    targets = self._tensor_targets[index]\n    return inputs,targets\n\nSkipping ahead, these are the other two required parts of a Dataset. the len function needs to return the total number of samples (that will be going across axis 0). and the getitem function returns the data that your network is utilizing based on some index\n\n## Data Representation in PyTorch\nif normalize:\n    self.normalize(self._tensor_inputs)\n    self.normalize(self._tensor_targets)\n\ndef normalize(self,tensor:torch.Tensor) -&gt; None:\n      tensor[:] = (tensor-tensor.amin(0))/(tensor.amax(0)-tensor.amin(0))\n\nThis last chunk of code does a basic 0 to 1 normalization of the data (i.e. it does not fit it to a gaussian). I prefer to have my dataset class handle transformations, normalizations, and augmentations.",
     "crumbs": [
       "Home",
       "Advanced",
@@ -36,95 +36,11 @@
     ]
   },
   {
-    "objectID": "data.html#building-custom-datasets",
-    "href": "data.html#building-custom-datasets",
+    "objectID": "data.html#create-a-dataloader",
+    "href": "data.html#create-a-dataloader",
     "title": "Data",
-    "section": "Building Custom Datasets",
-    "text": "Building Custom Datasets\nCreating flexible data loading pipelines using torch.utils.data.Dataset.\n\nUsing Built-in Datasets\nDemonstrate using datasets like MNIST or CIFAR-10 from torchvision.datasets.\nWriting a Custom Dataset Class\nGuide on implementing a Dataset subclass for your own data formats (e.g., CSVs, image folders).\nHandling Labels and Targets\nExplain label encoding, class balancing, and how labels are represented in classification/regression problems.",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#data-transforms-and-augmentation",
-    "href": "data.html#data-transforms-and-augmentation",
-    "title": "Data",
-    "section": "Data Transforms and Augmentation",
-    "text": "Data Transforms and Augmentation\nImproving generalization and performance through preprocessing.\n\nCommon Image Transforms\nIntroduce torchvision.transforms and show examples (e.g., resize, crop, normalization).\nAugmentation Strategies\nDiscuss real-time augmentation techniques (e.g., flipping, rotation) and their impact.\nComposing Transforms\nUse transforms.Compose() to build transformation pipelines.",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#loading-data-with-dataloader",
-    "href": "data.html#loading-data-with-dataloader",
-    "title": "Data",
-    "section": "Loading Data with DataLoader",
-    "text": "Loading Data with DataLoader\nEfficiently feeding data to your model during training.\n\nBatching and Shuffling\nExplain the importance of batch_size, shuffle, and how to configure them.\nUsing Multiple Workers\nDiscuss the num_workers argument for parallel data loading.\nIterating Over DataLoader\nShow how to use a for loop or an iterator to retrieve batches for training/validation.",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#best-practices-and-tips",
-    "href": "data.html#best-practices-and-tips",
-    "title": "Data",
-    "section": "Best Practices and Tips",
-    "text": "Best Practices and Tips\nMaking your data pipeline robust, efficient, and debug-friendly.\n\nSanity Checks and Debugging\nTips for visualizing a few samples, checking shapes and label correctness.\nPerformance Considerations\nPreloading, caching, avoiding memory bottlenecks.\nWhen Things Go Wrong\nCommon errors like shape mismatches, label misalignment, or data not being on the right device.",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#case-study-training-a-simple-cnn-on-image-data",
-    "href": "data.html#case-study-training-a-simple-cnn-on-image-data",
-    "title": "Data",
-    "section": "Case Study: Training a Simple CNN on Image Data",
-    "text": "Case Study: Training a Simple CNN on Image Data\nWalkthrough of building a full data pipeline and training loop using a real dataset.\n\nDataset and Transform Pipeline\nApply concepts from earlier sections to build a dataset and transform pipeline.\nTraining with DataLoader\nShow model training code that integrates with DataLoader output.\nVisualizing Inputs and Predictions\nOptional: add plots or sample outputs for interpretability.",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#summary-and-resources",
-    "href": "data.html#summary-and-resources",
-    "title": "Data",
-    "section": "Summary and Resources",
-    "text": "Summary and Resources\nRecap key concepts and provide further reading.\n\nKey Takeaways\nBullet points summarizing what users should now understand.\nFurther Reading and Links\nLink to official PyTorch tutorials, dataset libraries, and helpful tools (e.g., Albumentations, HuggingFace Datasets).\n\nLet me know if you’d like the outline tailored to a specific audience (e.g., undergraduates, researchers, engineers) or style (e.g., interactive tutorials, formal documentation).",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#generalization",
-    "href": "data.html#generalization",
-    "title": "Data",
-    "section": "Generalization",
-    "text": "Generalization",
-    "crumbs": [
-      "Home",
-      "Advanced",
-      "Data"
-    ]
-  },
-  {
-    "objectID": "data.html#train-test-splits",
-    "href": "data.html#train-test-splits",
-    "title": "Data",
-    "section": "Train-Test Splits",
-    "text": "Train-Test Splits",
+    "section": "Create a Dataloader",
+    "text": "Create a Dataloader\nI prefer to make a DataLoader class to handle the management of my model data. This is not required, but it tends to clean up my code and make life easier in the long run\n\n## Data Representation in PyTorch\n\nclass MLPDataLoader():\n    def __init__(\n            self,\n            dataset,\n            train_split:float = .8,\n            batch_size:int = 10,\n\n        ):\n        indices = list(range(len(dataset)))\n        random.shuffle(indices)\n        split = int(len(dataset)*train_split)\n        self._batch_size = batch_size\n        self._train_idx = indices[:split]\n        self._val_idx = indices[split:]\n        self._trainset = Subset(dataset,self._train_idx)\n        self._valset = Subset(dataset,self._val_idx)\n\n    def train_dataloader(self):\n        return DataLoader(\n            self._trainset,\n            batch_size=self._batch_size,\n            shuffle=True,\n        )\n\n    def val_dataloader(self):\n        return DataLoader(\n            self._valset,\n            batch_size=self._batch_size,\n            shuffle=False,\n        )",
     "crumbs": [
       "Home",
       "Advanced",
