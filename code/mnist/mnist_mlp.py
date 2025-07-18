@@ -61,7 +61,8 @@ with torch.no_grad():
         plt.imshow(img.view(28,28), cmap="gray")
         plt.title(f"Random sample true label: {lbl} predicted: {pred.item()}")
         plt.axis("off")
-        plt.show()
+        plt.pause(1)
+        print(f"Random sample true label: {lbl} predicted: {pred.item()}")
 
 print('\nTest set: Accuracy: {}/{} ({:.0f}%)\n'.format(
     correct, len(test_loader.dataset),
@@ -69,8 +70,16 @@ print('\nTest set: Accuracy: {}/{} ({:.0f}%)\n'.format(
 
 # 3. Loss and 4. Training
 
+# Setup for plotting
+train_losses = []
+test_losses = []
+epochs_plot = []
+
+plt.ion()
+fig, ax = plt.subplots(figsize=(10, 6))
+
 optimizer = optim.Adam(model.parameters())
-for epoch in range(10):
+for epoch in range(100):
     for batch_idx, (data, target) in enumerate(train_loader):
         optimizer.zero_grad()
         output = model(data)
@@ -85,9 +94,30 @@ for epoch in range(10):
                 test_output = model(test_data)
                 test_loss = F.nll_loss(test_output, test_target)
             model.train()
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f} Test: {:.6f}'.format(
-                epoch, batch_idx * len(data), len(train_loader.dataset),
-                100. * batch_idx / len(train_loader), loss.item(),test_loss.item()))
+            # Store losses for plotting
+            current_epoch = epoch + batch_idx / len(train_loader)
+            train_losses.append(loss.item())
+            test_losses.append(test_loss.item())
+            epochs_plot.append(current_epoch)
+
+            
+            # Update plot
+            ax.clear()
+            ax.plot(epochs_plot, train_losses, 'b-', label='Training Loss')
+            ax.plot(epochs_plot, test_losses, 'r-', label='Test Loss')
+            ax.set_xlabel('Epoch')
+            ax.set_ylabel('Loss')
+            ax.set_title('Training and Test Loss vs Epoch')
+            ax.legend()
+            ax.grid(True)
+            plt.pause(0.01)
+
+            # print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f} Test: {:.6f}'.format(
+            #     epoch, batch_idx * len(data), len(train_loader.dataset),
+            #     100. * batch_idx / len(train_loader), loss.item(),test_loss.item()))
+
+fig.savefig('test-train')
+plt.show()
 
 # 5. Evaluate
 correct = 0
