@@ -3,3 +3,5 @@ code/__pycache__/
 code/code-venv/
 code/output/
 code/simplemodels/__pycache__/
+code/mnist/output/
+code/mnist/mnist_model.pth
