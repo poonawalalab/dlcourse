@@ -3,8 +3,11 @@ import numpy as np
 import string
 import random
 import torch
+from typing import List
 
 from torch.utils.data import DataLoader, Dataset, Subset
+def normalize_tensor(tensor:torch.Tensor) -> None:
+    tensor[:] = (tensor-tensor.amin(0))/(tensor.amax(0)-tensor.amin(0))
 
 class RegressionDataset(Dataset):
     def __init__(self,
@@ -19,8 +22,8 @@ class RegressionDataset(Dataset):
         self._tensor_inputs = torch.tensor(df_inputs.values).float()
         self._tensor_targets = torch.tensor(df_targets.values).view(-1,len(target_labels)).float()
         if normalize:
-            self.normalize(self._tensor_inputs)
-            self.normalize(self._tensor_targets)
+            normalize_tensor(self._tensor_inputs)
+            normalize_tensor(self._tensor_targets)
         
     
     def __len__(self):
@@ -32,9 +35,33 @@ class RegressionDataset(Dataset):
         return inputs,targets
     
 
-    def normalize(self,tensor:torch.Tensor) -> None:
-        tensor[:] = (tensor-tensor.amin(0))/(tensor.amax(0)-tensor.amin(0))
+class WeldingDataset(Dataset):
+    def __init__(self,
+                 data_file:str,
+                 input_names:List,
+                 target_names:List,
+                 normalize:bool=False,
+                 ):
+        super().__init__()
 
+        df_data:pd.DataFrame = pd.read_excel(data_file) 
+        df_inputs = df_data[input_names]
+        df_targets = df_data[target_names]
+        self._tensor_inputs = torch.tensor(df_inputs.values).float()
+        self._tensor_targets = torch.tensor(df_targets.values).view(-1,len(target_names)).float()
+        if normalize:
+            normalize_tensor(self._tensor_inputs)
+            normalize_tensor(self._tensor_targets)
+        
+    
+    def __len__(self):
+        return len(self._tensor_targets)
+    
+    def __getitem__(self, index):
+        inputs = self._tensor_inputs[index]
+        targets = self._tensor_targets[index]
+        return inputs,targets
+    
 class MLPDataLoader():
     def __init__(
             self,
