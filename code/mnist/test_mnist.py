@@ -1,4 +1,4 @@
-
+## See `./code/mnist/test_mnist.py`
 import torch
 from torchvision.datasets import MNIST
 import torch
@@ -36,7 +36,7 @@ class Net(nn.Module):
             nn.Sigmoid(),
             nn.Linear(128, 64),
             nn.Sigmoid(),
-            nn.Linear(64, 10),  # 3 classes
+            nn.Linear(64, 10),  # 10 classes
         )
 
     def forward(self, x):

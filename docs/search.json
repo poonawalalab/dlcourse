@@ -311,7 +311,7 @@
     "href": "mnist.html#mnist-samples-1",
     "title": "Deep Learning Course",
     "section": "MNIST Samples",
-    "text": "MNIST Samples\n\nimport torch\nfrom torchvision.datasets import MNIST\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\nimport torch.nn.functional as F\nfrom torchvision import datasets, transforms\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# 1. Data\ntransform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Normalize((0.1307,), (0.3081,))\n])\n\ntrain_dataset = datasets.MNIST('data', train=True, download=True, transform=transform)\ntrain_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)\n\n\nrandom_array = np.random.randint(0, 59999, size=6)\n\nfig, axes = plt.subplots(nrows=2, ncols=3, figsize=(10, 8))\naxes = axes.flatten()\n\nfor i in range(6):\n    image, label = train_dataset[random_array[i]]\n    axes[i].imshow(image[0], cmap=\"gray\")\n    axes[i].set_title(f\"label: {label}\")",
+    "text": "MNIST Samples\nimport torch ## See `./code/mnist/viz_mnist.py`\nfrom torchvision import datasets, transforms\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# 1. Data\ntransform = transforms.Compose([ ## transform the raw data from the file while loading\n    transforms.ToTensor(),\n    transforms.Normalize((0.1307,), (0.3081,)) ## mean, std image -&gt; (image - mean)/std\n])\n\ntrain_dataset = datasets.MNIST('data', train=True, download=True, transform=transform)\n\n\nrandom_array = np.random.randint(0, 59999, size=6)\n\nfig, axes = plt.subplots(nrows=2, ncols=3, figsize=(10, 8))\naxes = axes.flatten()\n\nfor i in range(6):\n    image, label = train_dataset[random_array[i]]\n    axes[i].imshow(image[0], cmap=\"gray\")\n    axes[i].set_title(f\"label: {label}\")",
     "crumbs": [
       "Home",
       "Advanced",
@@ -323,7 +323,7 @@
     "href": "mnist.html#mnist-classifier",
     "title": "Deep Learning Course",
     "section": "MNIST Classifier",
-    "text": "MNIST Classifier\n\nimport torch\nfrom torchvision.datasets import MNIST\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\nimport torch.nn.functional as F\nfrom torchvision import datasets, transforms\nimport matplotlib.pyplot as plt\n\n# 1. Data\ntransform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Lambda(lambda x: x.view(-1))\n])\n\ntrain_dataset = datasets.MNIST('data', train=True, download=True, transform=transform)\ntrain_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)\n\ntest_dataset = datasets.MNIST('data', train=False, download=True, transform=transform)\ntest_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1000, shuffle=False)\ntest_plot_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=True)\n\n\n\n# 2. Model\nclass Net(nn.Module):\n    def __init__(self):\n        super(Net, self).__init__()\n        self.net = nn.Sequential(\n            nn.Linear(784, 512),\n            nn.Sigmoid(),\n            nn.Linear(512, 256),\n            nn.Sigmoid(),\n            nn.Linear(256, 128),\n            nn.Sigmoid(),\n            nn.Linear(128, 64),\n            nn.Sigmoid(),\n            nn.Linear(64, 10),  # 3 classes\n        )\n\n    def forward(self, x):\n        return F.log_softmax(self.net(x), dim=1)\n\nmodel = Net()\n\nPATH = './mnist_model.pth'\nmodel.load_state_dict(torch.load(PATH))\n\n# x. Evaluate\ncorrect = 0\n\nfig, axes = plt.subplots(nrows=2, ncols=5, figsize=(16, 8))\naxes = axes.flatten()\n\nwith torch.no_grad():\n    for data, target in test_loader:\n        output = model(data)\n        pred = output.argmax(dim=1, keepdim=True)\n        correct += pred.eq(target.view_as(pred)).sum().item()\n    for i in range(0,10):\n        images, labels = next(iter(test_plot_loader))\n        output = model(images)\n        pred = output.argmax(dim=1, keepdim=True)\n        img, lbl = images[0].squeeze(), labels.item()\n        axes[i].imshow(img.view(28,28), cmap=\"gray\")\n        axes[i].set_title(f\"true: {lbl} predicted: {pred.item()}\")\n    plt.show()\n\nprint('\\nTest set: Accuracy: {}/{} ({:.0f}%)\\n'.format(\n    correct, len(test_loader.dataset),\n    100. * correct / len(test_loader.dataset)))",
+    "text": "MNIST Classifier\n\n\n\n\nTest set: Accuracy: 9841/10000 (98%)",
     "crumbs": [
       "Home",
       "Advanced",
@@ -335,7 +335,7 @@
     "href": "mnist.html#mnist-classifier-1",
     "title": "Deep Learning Course",
     "section": "MNIST Classifier",
-    "text": "MNIST Classifier\n\n\n\n\nTest set: Accuracy: 9841/10000 (98%)",
+    "text": "MNIST Classifier\n## See `./code/mnist/test_mnist.py`\nimport torch\nfrom torchvision.datasets import MNIST\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\nimport torch.nn.functional as F\nfrom torchvision import datasets, transforms\nimport matplotlib.pyplot as plt\n\n# 1. Data\ntransform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Lambda(lambda x: x.view(-1))\n])\n\ntrain_dataset = datasets.MNIST('data', train=True, download=True, transform=transform)\ntrain_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)\n\ntest_dataset = datasets.MNIST('data', train=False, download=True, transform=transform)\ntest_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1000, shuffle=False)\ntest_plot_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=True)\n\n\n\n# 2. Model\nclass Net(nn.Module):\n    def __init__(self):\n        super(Net, self).__init__()\n        self.net = nn.Sequential(\n            nn.Linear(784, 512),\n            nn.Sigmoid(),\n            nn.Linear(512, 256),\n            nn.Sigmoid(),\n            nn.Linear(256, 128),\n            nn.Sigmoid(),\n            nn.Linear(128, 64),\n            nn.Sigmoid(),\n            nn.Linear(64, 10),  # 10 classes\n        )\n\n    def forward(self, x):\n        return F.log_softmax(self.net(x), dim=1)\n\nmodel = Net()\n\nPATH = './mnist_model.pth'\nmodel.load_state_dict(torch.load(PATH))\n\n# x. Evaluate\ncorrect = 0\n\nfig, axes = plt.subplots(nrows=2, ncols=5, figsize=(16, 8))\naxes = axes.flatten()\n\nwith torch.no_grad():\n    for data, target in test_loader:\n        output = model(data)\n        pred = output.argmax(dim=1, keepdim=True)\n        correct += pred.eq(target.view_as(pred)).sum().item()\n    for i in range(0,10):\n        images, labels = next(iter(test_plot_loader))\n        output = model(images)\n        pred = output.argmax(dim=1, keepdim=True)\n        img, lbl = images[0].squeeze(), labels.item()\n        axes[i].imshow(img.view(28,28), cmap=\"gray\")\n        axes[i].set_title(f\"true: {lbl} predicted: {pred.item()}\")\n    plt.show()\n\nprint('\\nTest set: Accuracy: {}/{} ({:.0f}%)\\n'.format(\n    correct, len(test_loader.dataset),\n    100. * correct / len(test_loader.dataset)))",
     "crumbs": [
       "Home",
       "Advanced",
@@ -347,7 +347,7 @@
     "href": "mnist.html#mnist-training",
     "title": "Deep Learning Course",
     "section": "MNIST Training",
-    "text": "MNIST Training\n\n# 2. Model\nclass Net(nn.Module):\n\n    ## Skip __init__ \n\n    def forward(self, x):\n        return F.log_softmax(self.net(x), dim=1)\n\nmodel = Net()\n\n# 3. Loss and 4. Training\n\n\noptimizer = optim.Adam(model.parameters())\nfor epoch in range(100):\n    for batch_idx, (data, target) in enumerate(train_loader):\n        optimizer.zero_grad()\n        output = model(data)\n        loss = F.nll_loss(output, target)\n        loss.backward()\n        optimizer.step()\n        if batch_idx % 100 == 0:\n            print('Train Epoch: {} [{}/{} ({:.0f}%)]\\tLoss: {:.6f}'.format(\n                epoch, batch_idx * len(data), len(train_loader.dataset),\n                100. * batch_idx / len(train_loader), loss.item()))\n\n# 5. Evaluate\ncorrect = 0\nwith torch.no_grad():\n    for data, target in test_loader:\n        output = model(data)\n        pred = output.argmax(dim=1, keepdim=True)\n        correct += pred.eq(target.view_as(pred)).sum().item()\n    for i in range(0,5):\n        images, labels = next(iter(test_plot_loader))\n        img, lbl = images[0].squeeze(), labels.item()\n        plt.imshow(img.view(28,28), cmap=\"gray\")\n        plt.title(f\"Random sample label: {lbl}\")\n        plt.axis(\"off\")\n        plt.show()\n\nprint('\\nTest set: Accuracy: {}/{} ({:.0f}%)\\n'.format(\n    correct, len(test_loader.dataset),\n    100. * correct / len(test_loader.dataset)))\n\n\nPATH = './mnist_model.pth'\ntorch.save(model.state_dict(), PATH)",
+    "text": "MNIST Training",
     "crumbs": [
       "Home",
       "Advanced",
@@ -359,7 +359,7 @@
     "href": "mnist.html#mnist-training-1",
     "title": "Deep Learning Course",
     "section": "MNIST Training",
-    "text": "MNIST Training",
+    "text": "MNIST Training\n## See `./code/mnist/mnist_mlp.py`\n# 1. Data \n# 2. Model\n# 3. Loss and 4. Training\n## Skips the plotting portion. See `mnist_mlp.py`\noptimizer = optim.Adam(model.parameters())\nfor epoch in range(100):\n    for batch_idx, (data, target) in enumerate(train_loader):\n        optimizer.zero_grad()\n        output = model(data)\n        ## Negative Log Likelihood loss defined within training loop:\n        loss = F.nll_loss(output, target) \n        loss.backward() # obtain gradients\n        optimizer.step() # update parameters \"descent step\"\n        if batch_idx % 100 == 0:\n            print('Train Epoch: {} [{}/{} ({:.0f}%)]\\tLoss: {:.6f}'.format(\n                epoch, batch_idx * len(data), len(train_loader.dataset),\n                100. * batch_idx / len(train_loader), loss.item()))\n\n# 5. Evaluate\n\n\n# 6. Save model\nPATH = './mnist_model.pth'\ntorch.save(model.state_dict(), PATH)",
     "crumbs": [
       "Home",
       "Advanced",
@@ -447,6 +447,30 @@
     "crumbs": [
       "Home",
       "Introduction"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-cnns",
+    "href": "mnist.html#mnist-cnns",
+    "title": "Deep Learning Course",
+    "section": "MNIST & CNNs",
+    "text": "MNIST & CNNs",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#cnns-and-mnist",
+    "href": "mnist.html#cnns-and-mnist",
+    "title": "Deep Learning Course",
+    "section": "CNNs and MNIST",
+    "text": "CNNs and MNIST\n## See `./code/mnist/mnist_cnn.py`\n# 1. Data \n# 2. Model\nclass Net(nn.Module):\n    def __init__(self):\n        super(Net, self).__init__()\n        self.conv1 = nn.Conv2d(1, 32, 3, padding=1)\n        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)\n        self.pool = nn.MaxPool2d(2, 2)\n        self.fc1 = nn.Linear(7 * 7 * 64, 128)\n        self.fc2 = nn.Linear(128, 10)\n\n    def forward(self, x):\n        x = self.pool(F.relu(self.conv1(x)))\n        x = self.pool(F.relu(self.conv2(x)))\n        x = x.view(-1, 7 * 7 * 64)\n        x = F.relu(self.fc1(x))\n        x = self.fc2(x)\n        return F.log_softmax(x, dim=1)\nmodel = Net()\n\n# 3. Loss and 4. Training\n# 5. Evaluate\n# 6. Save model",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
     ]
   }
 ]

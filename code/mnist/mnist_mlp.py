@@ -45,7 +45,6 @@ model = Net()
 print(model.parameters)
 
 
-## Evaluate for funs 
 # x. Evaluate
 correct = 0
 with torch.no_grad():

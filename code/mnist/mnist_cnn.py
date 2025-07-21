@@ -84,5 +84,5 @@ print('\nTest set: Accuracy: {}/{} ({:.0f}%)\n'.format(
     100. * correct / len(test_loader.dataset)))
 
 
-PATH = './mnist_model.pth'
+PATH = './mnist_model_cnn.pth'
 torch.save(model.state_dict(), PATH)
