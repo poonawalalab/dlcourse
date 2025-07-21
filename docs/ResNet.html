@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Residual Neural Netowrk – Deep Learning Course</title>
+<title>Residual Neural Network – Deep Learning Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./ResNet.html">Residual Neural Netowrk</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./ResNet.html">Residual Neural Network</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -223,7 +223,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ResNet.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Residual Neural Netowrk</span></a>
+ <span class="menu-text">Residual Neural Network</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mnist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classifying MNIST</span></a>
   </div>
 </li>
       </ul>
@@ -246,9 +252,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./ResNet.html">Residual Neural Netowrk</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./ResNet.html">Residual Neural Network</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Residual Neural Netowrk</h1>
+<h1 class="title">Residual Neural Network</h1>
 </div>
 
 
@@ -293,7 +299,7 @@ flowchart LR
 <section id="residual-networks" class="level2">
 <h2 class="anchored" data-anchor-id="residual-networks">Residual Networks</h2>
 <p>Let’s build a basic linear residual network, in essence it is just a mlp with a skip connection</p>
-<div id="52242a2e" class="cell" data-execution_count="1">
+<div id="d938b388" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ResidualModel(nn.Module):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                 in_neurons:<span class="bu">int</span>,</span>
@@ -319,7 +325,7 @@ flowchart LR
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is a completely viable network, but it isn’t really how these are used. The idea of a residual block is for a bunch of them to be commbined in sequence to form a “deep” network. To make this, we can just copy-paste our layers multiple times, or we can create a block.</p>
-<div id="ca9800a8" class="cell" data-execution_count="2">
+<div id="82532b77" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ResidualBlock(nn.Module):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                 in_neurons:<span class="bu">int</span>,</span>
@@ -351,7 +357,7 @@ flowchart LR
 </div>
 <p>Notice that we moved the drop out to the end of block, and added the ability to apply a layer norm to the entire block</p>
 <p>We can now generate a model using our residual blocks, basically the same way we made our original MLP</p>
-<div id="56f54928" class="cell" data-execution_count="3">
+<div id="fa6aefe2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ResNet(nn.Module):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                 in_neurons:<span class="bu">int</span>,</span>

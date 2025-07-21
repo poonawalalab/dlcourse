@@ -43,14 +43,16 @@ class Net(nn.Module):
         return F.log_softmax(self.net(x), dim=1)
 
 model = Net()
-print(model.parameters)
 
-PATH = 'mnist_model.pth'
+PATH = './mnist_model.pth'
 model.load_state_dict(torch.load(PATH))
 
-## Evaluate for funs 
 # x. Evaluate
 correct = 0
+
+fig, axes = plt.subplots(nrows=2, ncols=5, figsize=(16, 8))
+axes = axes.flatten()
+
 with torch.no_grad():
     for data, target in test_loader:
         output = model(data)
@@ -61,10 +63,9 @@ with torch.no_grad():
         output = model(images)
         pred = output.argmax(dim=1, keepdim=True)
         img, lbl = images[0].squeeze(), labels.item()
-        plt.imshow(img.view(28,28), cmap="gray")
-        plt.title(f"Random sample true label: {lbl} predicted: {pred.item()}")
-        plt.axis("off")
-        plt.show()
+        axes[i].imshow(img.view(28,28), cmap="gray")
+        axes[i].set_title(f"true: {lbl} predicted: {pred.item()}")
+    plt.show()
 
 print('\nTest set: Accuracy: {}/{} ({:.0f}%)\n'.format(
     correct, len(test_loader.dataset),

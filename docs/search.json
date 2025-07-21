@@ -271,6 +271,102 @@
     ]
   },
   {
+    "objectID": "mnist.html#classifying-mnist",
+    "href": "mnist.html#classifying-mnist",
+    "title": "Deep Learning Course",
+    "section": "Classifying MNIST",
+    "text": "Classifying MNIST\n\n\nDL Course\n\n\n\n\n\n\n\nInstructor: Hasan A. Poonawala, Joseph Kershaw  Mechanical and Aerospace Engineering  University of Kentucky, Lexington, KY, USA",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-dataset",
+    "href": "mnist.html#mnist-dataset",
+    "title": "Deep Learning Course",
+    "section": "MNIST Dataset",
+    "text": "MNIST Dataset\n\nGoal: Zip-code recognition for mail sorting\n60,00060,000 training images of digits 00-99\n10,00010,000 test images\nSmaller USPS dataset had 72917291 train and 20072007 test images\n\nHumans had a 2.5% error rate (source).",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-samples",
+    "href": "mnist.html#mnist-samples",
+    "title": "Deep Learning Course",
+    "section": "MNIST Samples",
+    "text": "MNIST Samples\n\nEach image is 28×2828 \\times 28 with grayscale value in [0,1][0,1]",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-samples-1",
+    "href": "mnist.html#mnist-samples-1",
+    "title": "Deep Learning Course",
+    "section": "MNIST Samples",
+    "text": "MNIST Samples\n\nimport torch\nfrom torchvision.datasets import MNIST\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\nimport torch.nn.functional as F\nfrom torchvision import datasets, transforms\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# 1. Data\ntransform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Normalize((0.1307,), (0.3081,))\n])\n\ntrain_dataset = datasets.MNIST('data', train=True, download=True, transform=transform)\ntrain_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)\n\n\nrandom_array = np.random.randint(0, 59999, size=6)\n\nfig, axes = plt.subplots(nrows=2, ncols=3, figsize=(10, 8))\naxes = axes.flatten()\n\nfor i in range(6):\n    image, label = train_dataset[random_array[i]]\n    axes[i].imshow(image[0], cmap=\"gray\")\n    axes[i].set_title(f\"label: {label}\")",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-classifier",
+    "href": "mnist.html#mnist-classifier",
+    "title": "Deep Learning Course",
+    "section": "MNIST Classifier",
+    "text": "MNIST Classifier\n\nimport torch\nfrom torchvision.datasets import MNIST\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\nimport torch.nn.functional as F\nfrom torchvision import datasets, transforms\nimport matplotlib.pyplot as plt\n\n# 1. Data\ntransform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Lambda(lambda x: x.view(-1))\n])\n\ntrain_dataset = datasets.MNIST('data', train=True, download=True, transform=transform)\ntrain_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)\n\ntest_dataset = datasets.MNIST('data', train=False, download=True, transform=transform)\ntest_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1000, shuffle=False)\ntest_plot_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=True)\n\n\n\n# 2. Model\nclass Net(nn.Module):\n    def __init__(self):\n        super(Net, self).__init__()\n        self.net = nn.Sequential(\n            nn.Linear(784, 512),\n            nn.Sigmoid(),\n            nn.Linear(512, 256),\n            nn.Sigmoid(),\n            nn.Linear(256, 128),\n            nn.Sigmoid(),\n            nn.Linear(128, 64),\n            nn.Sigmoid(),\n            nn.Linear(64, 10),  # 3 classes\n        )\n\n    def forward(self, x):\n        return F.log_softmax(self.net(x), dim=1)\n\nmodel = Net()\n\nPATH = './mnist_model.pth'\nmodel.load_state_dict(torch.load(PATH))\n\n# x. Evaluate\ncorrect = 0\n\nfig, axes = plt.subplots(nrows=2, ncols=5, figsize=(16, 8))\naxes = axes.flatten()\n\nwith torch.no_grad():\n    for data, target in test_loader:\n        output = model(data)\n        pred = output.argmax(dim=1, keepdim=True)\n        correct += pred.eq(target.view_as(pred)).sum().item()\n    for i in range(0,10):\n        images, labels = next(iter(test_plot_loader))\n        output = model(images)\n        pred = output.argmax(dim=1, keepdim=True)\n        img, lbl = images[0].squeeze(), labels.item()\n        axes[i].imshow(img.view(28,28), cmap=\"gray\")\n        axes[i].set_title(f\"true: {lbl} predicted: {pred.item()}\")\n    plt.show()\n\nprint('\\nTest set: Accuracy: {}/{} ({:.0f}%)\\n'.format(\n    correct, len(test_loader.dataset),\n    100. * correct / len(test_loader.dataset)))",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-classifier-1",
+    "href": "mnist.html#mnist-classifier-1",
+    "title": "Deep Learning Course",
+    "section": "MNIST Classifier",
+    "text": "MNIST Classifier\n\n\n\n\nTest set: Accuracy: 9841/10000 (98%)",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-training",
+    "href": "mnist.html#mnist-training",
+    "title": "Deep Learning Course",
+    "section": "MNIST Training",
+    "text": "MNIST Training\n\n# 2. Model\nclass Net(nn.Module):\n\n    ## Skip __init__ \n\n    def forward(self, x):\n        return F.log_softmax(self.net(x), dim=1)\n\nmodel = Net()\n\n# 3. Loss and 4. Training\n\n\noptimizer = optim.Adam(model.parameters())\nfor epoch in range(100):\n    for batch_idx, (data, target) in enumerate(train_loader):\n        optimizer.zero_grad()\n        output = model(data)\n        loss = F.nll_loss(output, target)\n        loss.backward()\n        optimizer.step()\n        if batch_idx % 100 == 0:\n            print('Train Epoch: {} [{}/{} ({:.0f}%)]\\tLoss: {:.6f}'.format(\n                epoch, batch_idx * len(data), len(train_loader.dataset),\n                100. * batch_idx / len(train_loader), loss.item()))\n\n# 5. Evaluate\ncorrect = 0\nwith torch.no_grad():\n    for data, target in test_loader:\n        output = model(data)\n        pred = output.argmax(dim=1, keepdim=True)\n        correct += pred.eq(target.view_as(pred)).sum().item()\n    for i in range(0,5):\n        images, labels = next(iter(test_plot_loader))\n        img, lbl = images[0].squeeze(), labels.item()\n        plt.imshow(img.view(28,28), cmap=\"gray\")\n        plt.title(f\"Random sample label: {lbl}\")\n        plt.axis(\"off\")\n        plt.show()\n\nprint('\\nTest set: Accuracy: {}/{} ({:.0f}%)\\n'.format(\n    correct, len(test_loader.dataset),\n    100. * correct / len(test_loader.dataset)))\n\n\nPATH = './mnist_model.pth'\ntorch.save(model.state_dict(), PATH)",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
+    "objectID": "mnist.html#mnist-training-1",
+    "href": "mnist.html#mnist-training-1",
+    "title": "Deep Learning Course",
+    "section": "MNIST Training",
+    "text": "MNIST Training",
+    "crumbs": [
+      "Home",
+      "Advanced",
+      "Classifying MNIST"
+    ]
+  },
+  {
     "objectID": "Neural_Networks.html",
     "href": "Neural_Networks.html",
     "title": "\nIntroduction\n",
@@ -287,37 +383,37 @@
   {
     "objectID": "ResNet.html",
     "href": "ResNet.html",
-    "title": "Residual Neural Netowrk",
+    "title": "Residual Neural Network",
     "section": "",
     "text": "Outline: Creating a residual neural network",
     "crumbs": [
       "Home",
       "Advanced",
-      "Residual Neural Netowrk"
+      "Residual Neural Network"
     ]
   },
   {
     "objectID": "ResNet.html#skip-connections",
     "href": "ResNet.html#skip-connections",
-    "title": "Residual Neural Netowrk",
+    "title": "Residual Neural Network",
     "section": "Skip Connections",
     "text": "Skip Connections\nTheoretically, you cannot have too many layers in a network. For example, if a perfect network has 3 layers, then any excessive layer should just not do anything. So a deeper network should always have atleast the same performance as a shallower one…\nThis is not the case. Primarily it is theorized that layers do not like to become the identity function, so they negatively impact performance. To address this, we can effectivly add an identity function to our network that bypasses the network layers known as a skip connection.\n\n\n\n\n\n---\ntitle: RES\n---\nflowchart LR\n  D(Input) --&gt; E[Layer]\n  E --&gt; F(($$+$$))\n  D --&gt; F\n  F --&gt; G(Output)",
     "crumbs": [
       "Home",
       "Advanced",
-      "Residual Neural Netowrk"
+      "Residual Neural Network"
     ]
   },
   {
     "objectID": "ResNet.html#residual-networks",
     "href": "ResNet.html#residual-networks",
-    "title": "Residual Neural Netowrk",
+    "title": "Residual Neural Network",
     "section": "Residual Networks",
     "text": "Residual Networks\nLet’s build a basic linear residual network, in essence it is just a mlp with a skip connection\n\nclass ResidualModel(nn.Module):\n    def __init__(self,\n                 in_neurons:int,\n                 hidden_neurons:int,\n                 out_neurons:int,\n                 dropout:float = 0.,\n                )-&gt;None:\n        \n        super().__init__()\n\n        layers = [\n                nn.Linear(in_neurons,hidden_neurons),\n                nn.Relu(),\n                nn.Dropout(dropout),\n                nn.Linear(hidden_neurons,out_neurons),\n                ]\n                \n        self.dense = nn.Sequential(*layers)\n        self.skip = nn.Linear(in_neurons,out_neurons)\n\n    def forward(self,x) -&gt; torch.Tensor:\n        x = self.dense(x) + self.skip(x)\n        return x\n\nThis is a completely viable network, but it isn’t really how these are used. The idea of a residual block is for a bunch of them to be commbined in sequence to form a “deep” network. To make this, we can just copy-paste our layers multiple times, or we can create a block.\n\nclass ResidualBlock(nn.Module):\n    def __init__(self,\n                 in_neurons:int,\n                 hidden_neurons:int,\n                 out_neurons:int,\n                 dropout:float = 0.,\n                 use_layer_norm:bool = False,\n                )-&gt;None:\n        \n        super().__init__()\n\n        layers = [\n                nn.Linear(in_neurons,hidden_neurons),\n                nn.Relu(),               \n                nn.Linear(hidden_neurons,out_neurons),\n                nn.Dropout(dropout),\n                ]\n                \n        self.dense = nn.Sequential(*layers)\n        self.skip = nn.Linear(in_neurons,out_neurons)\n        self.layer_norm = nn.LayerNorm(out_neurons) if use_layer_norm else None\n\n    def forward(self,x) -&gt; torch.Tensor:\n        x = self.dense(x) + self.skip(x)\n\n        if self.layer_norm is not None:\n                x = self.layer_norm(x)        \n        return x\n\nNotice that we moved the drop out to the end of block, and added the ability to apply a layer norm to the entire block\nWe can now generate a model using our residual blocks, basically the same way we made our original MLP\n\nclass ResNet(nn.Module):\n    def __init__(self,\n                 in_neurons:int,\n                 hidden_neurons:int,\n                 out_neurons:int,\n                 no_blocks: int,\n                 dropout:float = 0.,\n                 use_layer_norm:bool = False,\n                )-&gt;None:\n        \n        super().__init__()\n\n\n        layers = [ResidualBlock(in_neurons,hidden_neurons,hidden_neurons,dropout,use_layer_norm)]\n                \n        for i in range(no_blocks):\n                layers.append(ResidualBlock(hidden_neurons,hidden_neurons,hidden_neurons,dropout,use_layer_norm))\n\n        layers.append(ResidualBlock(hidden_neurons,hidden_neurons,out_neurons,dropout,use_layer_norm))\n        self.model = nn.Sequential(*layers)\n\n    def forward(self,x) -&gt; torch.Tensor:\n        x = self.model(x)     \n        return x",
     "crumbs": [
       "Home",
       "Advanced",
-      "Residual Neural Netowrk"
+      "Residual Neural Network"
     ]
   },
   {
