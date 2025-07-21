@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Learning Course</title>
+<title>CNNs – Deep Learning Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -89,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -107,7 +170,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Deep Learning Course</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./CNNs.html">CNNs</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -197,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./CNNs.html" class="sidebar-item-text sidebar-link">
+  <a href="./CNNs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">CNNs</span></a>
   </div>
 </li>
@@ -208,15 +271,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#convolution-layers-in-pytorch" id="toc-convolution-layers-in-pytorch" class="nav-link active" data-scroll-target="#convolution-layers-in-pytorch">Convolution Layers in Pytorch</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html">Advanced</a></li><li class="breadcrumb-item"><a href="./CNNs.html">CNNs</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Deep Learning Course</h1>
+<h1 class="title">CNNs</h1>
 </div>
 
 
@@ -233,23 +302,53 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Course github: <a href="https://github.com/poonawalalab/dlcourse">poonawalalab/dlcourse</a></p>
-<ol type="1">
-<li><a href="introduction.html">Introduction</a>
-<ul>
-<li><a href="introduction.html#numpy">NumPy</a></li>
-</ul></li>
-<li><a href="simplemodels.html">Simple Models</a></li>
-<li><a href="pytorch.html">PyTorch</a></li>
-<li><a href="mlps.html">Multilayer Perceptrons (MLPs)</a></li>
-<li>Datasets</li>
-<li><a href="">CNNs</a>
-<ul>
-<li>Convolutions</li>
-</ul></li>
-</ol>
+<p>Outline: Using Pytorch for CNNs and Kernel Math</p>
+<section id="convolution-layers-in-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="convolution-layers-in-pytorch">Convolution Layers in Pytorch</h2>
+<p>Unlike linear layers, Convolution layers have more parameters required to initialized. The first two arguments are the `in_channels’ &amp; ‘out_channels’. From a data perspective, a Channel is some stream of data, so if you are looking at one time series of sound data, you have 1 channel. Conversely, a color image is a 3 channel input for a 2D convolution.</p>
+<p>This is analogous to the in_neurons and out_neurons of a linear layer, and they must be maintained throughout your network, e.g., a Convolution Layer with an ‘out_channels’ of 3 must be fed into a Convolution Layer with an ‘in_channels’ of 3.</p>
+<p>The next input is the kernel size. This is how much that layer “sees” at any given time. For higher dimensional kernels, you can have different sizes across your dimensions, but normally they are all the same.</p>
+<p>Next is stride, which is how “fast” a kernel moves across the dataset, a longer stride is analogous to a passing glance, whereas a shorter one is like an in depth search.</p>
+<p>The final main parameter is padding, which is how much non-impactful data (usually zeros) are added to the edge of your input. This is used for 2 reasons, the first is that you want to emphasize the edges of your data more. Secondly, it allows you to adjust the number of features leaving a convolution layer.</p>
+<p>A nice animation that shows these is found <a href="https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md">here.</a></p>
+<div id="6147f39b" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>batches:<span class="bu">int</span> <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>channels:<span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>length_1d:<span class="bu">int</span> <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>height_2d:<span class="bu">int</span> <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>width_2d:<span class="bu">int</span> <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>input_1d <span class="op">=</span> torch.randn(batches,channels,length_1d)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>input_2d <span class="op">=</span> torch.randn(batches,channels,height_2d,width_2d)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>channels_out:<span class="bu">int</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>kernel_size:<span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>stride:<span class="bu">int</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>padding:<span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>conv1d <span class="op">=</span> nn.Conv1d(channels,channels_out,kernel_size,stride,padding)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>conv2d <span class="op">=</span> nn.Conv2d(channels,channels_out,kernel_size,stride,padding)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of 1D Output:'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(conv1d(input_1d).size())</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of 2D Output:'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(conv2d(input_2d).size())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Size of 1D Output:
+torch.Size([2, 5, 11])
+Size of 2D Output:
+torch.Size([2, 5, 9, 9])</code></pre>
+</div>
+</div>
+<p>As you can see, the channels are hard coded into the linear layer, but the size of the data dimensions have changed. This is where convolution arithmetic comes into play.</p>
+<p><span class="math inline">\(L~out~ = \lfloor\frac{L~in~ + 2 \times padding - size}{stride}\rfloor + 1\)</span></p>
+<p>While this changing size doesn’t matter from a network perspective (as long as you are only using convolution layers), it has 2 main implications. The first is that you don’t want to completely lose your data down to nothing. The second is that you usually want to convert to a linear layer, and you will need to know how many features are being fed into it for proper construction. While one way to handle this is to calculate the size for every layer, the other is to use the equation to force a known behavior for example, a kernel size of 3, a pad of 1, and a stride of 2, will always half the length of your input, making the math easy.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
