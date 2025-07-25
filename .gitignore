@@ -4,3 +4,14 @@ code/code-venv/
 code/output/
 code/simplemodels/__pycache__/
 code/mnist/output/
+code/cnn_models_practice/
+code/mnist/__pycache__/
+docs/assets/Comparison_image_neural_networks.svg
+code/resnets/README.md
+code/resnets/__pycache__/
+code/resnets/custom_cifar_net.pth
+code/resnets/data/
+code/resnets/kernel_example.py
+code/resnets/test_custom_on_cifar10.py
+code/resnets/train_custom_on_cifar10.py
+
