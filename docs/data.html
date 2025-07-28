@@ -167,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -179,6 +179,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loss Functions</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./simplemodels.html" class="sidebar-item-text sidebar-link">
@@ -284,14 +290,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Outline: Working with Data in PyTorch for Deep Learning</p>
+<p>Outline: Working with Data in <code>PyTorch</code> for Deep Learning</p>
 <section id="analyze-data" class="level2">
 <h2 class="anchored" data-anchor-id="analyze-data">Analyze Data</h2>
 <p>Understanding the structure and content of your data is paramount to good data-driven models</p>
-<div id="4dab6422" class="cell" data-execution_count="1">
+<div id="b2309ea0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_pickle(<span class="st">"_dlcourse/code/RegressionData.pkl"</span>) <span class="co">#This could be any file format</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_pickle(<span class="vs">r"_dlcourse/code/Linear Models/RegressionData.pkl"</span>) <span class="co">#This could be any file format</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.colheader_justify'</span>, <span class="st">'center'</span>) <span class="co">#pretty print option</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.precision'</span>,<span class="dv">3</span>) <span class="co">#pretty print option</span></span>
@@ -310,7 +316,7 @@ Top 5 rows:
 4  0.474  7.877 -0.879  2.787  1.869 -5.179    3.191 </code></pre>
 </div>
 </div>
-<p>In this example we have 6 inputs (A thru F) and 1 output (Target_0) of all numeric data. While not required, it is useful to create a <code>torch</code> dataset object to manage it. My prefered data flow is shown below, but it is up to you how to structure and handle your own projects.</p>
+<p>In this example we have 6 inputs (A thru F) and 1 output (Target_0) of all numeric data. While not required, it is useful to create a <code>torch</code> dataset object to manage it. My preferred data flow is shown below, but it is up to you how to structure and handle your own projects.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -331,8 +337,8 @@ Top 5 rows:
 </section>
 <section id="create-a-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-dataset">Create a Dataset</h2>
-<p>Whenever you want to create a custom <code>pytorch</code> Dataset, there are three requirements: Inhereit the Dataset class, create a <strong>len</strong> function, and create a <strong>getitem</strong> function.</p>
-<div id="198a552c" class="cell" data-execution_count="2">
+<p>Whenever you want to create a custom <code>pytorch</code> Dataset, there are three requirements: Inherit the Dataset class, create a <strong>len</strong> function, and create a <strong>getitem</strong> function.</p>
+<div id="1ba187dd" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SomeDataset(Dataset):</span>
@@ -347,8 +353,8 @@ Top 5 rows:
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can include any other function and pass any number of initial class inputs, but these three requirements must be met.</p>
-<p>For this example we are going to use the RegressionDataset class.</p>
-<div id="178d5602" class="cell" data-execution_count="3">
+<p>For this example we are going to use the <code>RegressionDataset</code> class.</p>
+<div id="6d1c3c35" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RegressionDataset(Dataset):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 data_file:<span class="bu">str</span>,</span>
@@ -356,22 +362,22 @@ Top 5 rows:
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 ):</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here we are creating the class <strong>RegressionDataset</strong> which is a subclass of <code>torch.utils.data.Dataset</code>. It will take the argument <code>data_file</code> as the path to the regression data, and optionally <code>normalize</code> which will normalize the data from 0 to 1</p>
-<div id="8227a1d9" class="cell" data-execution_count="4">
+<p>Here we are creating the class <code>RegressionDataset</code> which is a subclass of <code>torch.utils.data.Dataset</code>. It will take the argument <code>data_file</code> as the path to the regression data, and optionally <code>normalize</code> which will normalize the data from 0 to 1</p>
+<div id="090b43f7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_data:pd.DataFrame <span class="op">=</span> pd.read_pickle(data_file) <span class="co">#opens base PKL file</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>target_labels <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> df_data.columns <span class="cf">if</span> c.startswith(<span class="st">'Target'</span>)] <span class="co">#Finds all target columns</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df_inputs <span class="op">=</span> df_data.drop(target_labels,axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># Creates DF of only inputs</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df_targets <span class="op">=</span> df_data[target_labels] <span class="co"># Creates DF of only targets</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we have loaded all the data and split up the inputs and the targets.</p>
-<div id="f174cfed" class="cell" data-execution_count="5">
+<div id="1810b200" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>._tensor_inputs <span class="op">=</span> torch.tensor(df_inputs.values).<span class="bu">float</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>._tensor_targets <span class="op">=</span> torch.tensor(df_targets.values).view(<span class="op">-</span><span class="dv">1</span>,<span class="bu">len</span>(target_labels)).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here is an easy pitfall in data management. This chunk converts the code into tensors and shapes them into the appropriate size.</p>
 <p>df.values → Converts DataFrame in a <code>numpy</code> array .float() → Converts the Double(float64) tensor into Float(float32) .view(-1,len(target_labels)) → Converts the 1D target tensor into a 2D tensor</p>
 <p>One thing we can check is the documentation of the layer we are going to be using, <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Linear.html">Linear</a>. This informs the structure of the data that needs to be fed into the network. We see that the layer takes (*,H<sub>in</sub>​), so all of the “action” will be taking place on the last dimension of your inputs.</p>
-<div id="d6a95c89" class="cell" data-execution_count="6">
+<div id="fe9de3b7" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._tensor_targets)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -380,8 +386,8 @@ Top 5 rows:
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    targets <span class="op">=</span> <span class="va">self</span>._tensor_targets[index]</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> inputs,targets</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Skipping ahead, these are the other two required parts of a Dataset. the <strong>len</strong> function needs to return the total number of samples (that will be going across axis 0). and the <strong>getitem</strong> function returns the data that your network is utilizing based on some index</p>
-<div id="7eaf0d6f" class="cell" data-execution_count="7">
+<p>Skipping ahead, these are the other two required parts of a Dataset. The <strong>len</strong> function needs to return the total number of samples (that will be going across axis 0). The <strong>getitem</strong> function returns the data that your network is utilizing based on some index</p>
+<div id="7f414015" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Data Representation in PyTorch</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> normalize:</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.normalize(<span class="va">self</span>._tensor_inputs)</span>
@@ -395,7 +401,7 @@ Top 5 rows:
 <section id="create-a-dataloader" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-dataloader">Create a Dataloader</h2>
 <p>I prefer to make a DataLoader class to handle the management of my model data. This is not required, but it tends to clean up my code and make life easier in the long run</p>
-<div id="f6bd365a" class="cell" data-execution_count="8">
+<div id="b3880dbe" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Data Representation in PyTorch</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MLPDataLoader():</span>

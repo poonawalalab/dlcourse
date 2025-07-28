@@ -170,7 +170,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./simplemodels.html">Basics</a></li><li class="breadcrumb-item"><a href="./pytorch.html">PyTorch</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./loss.html">Basics</a></li><li class="breadcrumb-item"><a href="./pytorch.html">PyTorch</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -193,7 +193,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -205,6 +205,12 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loss Functions</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./simplemodels.html" class="sidebar-item-text sidebar-link">
@@ -284,7 +290,10 @@ window.Quarto = {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#tensors" id="toc-tensors" class="nav-link" data-scroll-target="#tensors">Tensors</a></li>
-  <li><a href="#autograd" id="toc-autograd" class="nav-link" data-scroll-target="#autograd">Autograd</a></li>
+  <li><a href="#autograd" id="toc-autograd" class="nav-link" data-scroll-target="#autograd">Autograd</a>
+  <ul class="collapse">
+  <li><a href="#turning-off-gradient-tracking" id="toc-turning-off-gradient-tracking" class="nav-link" data-scroll-target="#turning-off-gradient-tracking">Turning off gradient tracking</a></li>
+  </ul></li>
   <li><a href="#application-linear-model" id="toc-application-linear-model" class="nav-link" data-scroll-target="#application-linear-model">Application: Linear Model</a></li>
   </ul>
 </nav>
@@ -292,7 +301,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./simplemodels.html">Basics</a></li><li class="breadcrumb-item"><a href="./pytorch.html">PyTorch</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./loss.html">Basics</a></li><li class="breadcrumb-item"><a href="./pytorch.html">PyTorch</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">PyTorch</h1>
 </div>
@@ -318,7 +327,7 @@ window.Quarto = {
 <section id="tensors" class="level2">
 <h2 class="anchored" data-anchor-id="tensors">Tensors</h2>
 <p>Tensors in <code>torch</code> are <span class="math inline">\(n\)</span>-dimensional array objects, similar to <code>numpy</code> arrays. In fact, you can easily switch:</p>
-<div id="f82ada07" class="cell" data-execution_count="1">
+<div id="9dd6e235" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -331,7 +340,7 @@ window.Quarto = {
 <section id="autograd" class="level2">
 <h2 class="anchored" data-anchor-id="autograd">Autograd</h2>
 <p>Deep learning is nearly impossible without the ability to automatically differentiate models. Before that, demonstrating the value of a new model required careful derivation and implementation of its gradients. Now, all of that work has been automated away.</p>
-<div id="99310c8d" class="cell" data-execution_count="2">
+<div id="e2464582" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> torch.Tensor([<span class="fl">0.8762</span>])</span>
@@ -348,6 +357,13 @@ torch grad:  0.20754991471767426  manual gradient:  0.20754991471767426</code></
 </div>
 </div>
 <p>Note that <span class="math inline">\(\sigma(x) = \frac{1}{1+e^{-x}}\)</span> has derivative <span class="math inline">\(\sigma'(x) = \frac{e^{-x}}{(1+e^{-x})^2} = \sigma(x) (1-\sigma(x))\)</span></p>
+<section id="turning-off-gradient-tracking" class="level3">
+<h3 class="anchored" data-anchor-id="turning-off-gradient-tracking">Turning off gradient tracking</h3>
+<p><code>PyTorch</code> must do extra work to track gradients. This work will be done whenever we call the model, which is wasteful when we are calling it to perform inference using the trained model. To tell <code>PyTorch</code> we won’t need gradients, the inference is performed using the <code>no_grad()</code> method:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>()    <span class="co"># tell pytorch that we will use the model in evaluation mode</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad(): <span class="co"># don't track gradients </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(X_test) <span class="co"># make predictions on the test set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="application-linear-model" class="level2">
 <h2 class="anchored" data-anchor-id="application-linear-model">Application: Linear Model</h2>
@@ -356,83 +372,81 @@ torch grad:  0.20754991471767426  manual gradient:  0.20754991471767426</code></
 <li>The model is defined separately from the loss.</li>
 <li>We don’t implement a gradient function, autodiff will derive it for us.</li>
 </ol>
-<div id="a95a7cd1" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Plot iterates and loss under GD using torch</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Train a linear model using pytorch</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create data</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">## First as numpy array</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">100</span>) </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>y_noise_free <span class="op">=</span> <span class="dv">4</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_noise_free<span class="op">+</span><span class="fl">0.5</span><span class="op">*</span>np.random.randn(<span class="dv">100</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">## Create tensors, as 2D arrays using unsqueeze </span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> torch.tensor(x, dtype<span class="op">=</span>torch.float32).unsqueeze(<span class="dv">1</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> torch.tensor(y, dtype<span class="op">=</span>torch.float32).unsqueeze(<span class="dv">1</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train.shape) <span class="co">## two dimensions now</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_train.shape)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train.requires_grad)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define Linear model</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Lin(nn.Module):</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span>  nn.Linear(<span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(x)</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Lin()</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Define loss </span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.MSELoss() <span class="co"># Mean Squared Error</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Start training: "</span>)</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Training loop</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>):</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    model.train()       <span class="co"># Tell pytorch that model computations are for training now</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    model.zero_grad()   <span class="co"># clear accumulated grads</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(X_train) <span class="co"># predict values ... </span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> criterion(outputs, y_train) <span class="co"># ... so we can compute loss </span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    loss.backward()     <span class="co"># Automatically get gradients of loss wrt model as it is right now</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad(): <span class="co">## Manually implementing gradient descent. Don't want the update to be tracked by autograd</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> param <span class="kw">in</span> model.parameters():</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>            param <span class="op">-=</span> <span class="fl">0.005</span> <span class="op">*</span> param.grad  <span class="co"># θ ← θ − α∇θ L</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (epoch <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span>: <span class="co">## Show us the loss as training proceeds</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>epoch<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">/5000 - Loss: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Evaluation</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>()    <span class="co"># tell pytorch that we will use the model in evaluation mode</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(X_train).numpy() <span class="co"># convert predictions to numpy array to work with matplotlib</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x,y,label<span class="op">=</span><span class="st">"noise data"</span>)</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x,y_noise_free,label<span class="op">=</span><span class="st">"true (noise-free)"</span>)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x,outputs[:,<span class="dv">0</span>],label<span class="op">=</span><span class="st">"predicted"</span>)</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="971e1e16" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Plot iterates and loss under GD using torch</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Train a linear model using pytorch</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create data</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">## First as numpy array</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">100</span>) </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>y_noise_free <span class="op">=</span> <span class="dv">4</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">5</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_noise_free<span class="op">+</span><span class="fl">0.5</span><span class="op">*</span>np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">## Create tensors, as 2D arrays using unsqueeze </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> torch.tensor(x, dtype<span class="op">=</span>torch.float32).unsqueeze(<span class="dv">1</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> torch.tensor(y, dtype<span class="op">=</span>torch.float32).unsqueeze(<span class="dv">1</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train.shape) <span class="co">## two dimensions now</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_train.shape)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define Linear model</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Lin(nn.Module):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span>  nn.Linear(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(x)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Lin()</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Define loss </span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.MSELoss() <span class="co"># Mean Squared Error</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Start training: "</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Training loop</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>):</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    model.train()       <span class="co"># Tell pytorch that model computations are for training now</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    model.zero_grad()   <span class="co"># clear accumulated grads</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(X_train) <span class="co"># predict values ... </span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> criterion(outputs, y_train) <span class="co"># ... so we can compute loss </span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    loss.backward()     <span class="co"># Automatically get gradients of loss wrt model as it is right now</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad(): <span class="co">## Manually implementing gradient descent. Don't want the update to be tracked by autograd</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> param <span class="kw">in</span> model.parameters():</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>            param <span class="op">-=</span> <span class="fl">0.005</span> <span class="op">*</span> param.grad  <span class="co"># θ ← θ − α∇θ L</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (epoch <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span>: <span class="co">## Show us the loss as training proceeds</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>epoch<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">/5000 - Loss: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Evaluation</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>()    <span class="co"># tell pytorch that we will use the model in evaluation mode</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(X_train).numpy() <span class="co"># convert predictions to numpy array to work with matplotlib</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x,y,label<span class="op">=</span><span class="st">"noise data"</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x,y_noise_free,label<span class="op">=</span><span class="st">"true (noise-free)"</span>)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x,outputs[:,<span class="dv">0</span>],label<span class="op">=</span><span class="st">"predicted"</span>)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch.Size([100, 1])
 torch.Size([100, 1])
-False
 Start training: 
-Epoch 500/5000 - Loss: 0.4987
-Epoch 1000/5000 - Loss: 0.2504
-Epoch 1500/5000 - Loss: 0.2422
-Epoch 2000/5000 - Loss: 0.2420
-Epoch 2500/5000 - Loss: 0.2419
-Epoch 3000/5000 - Loss: 0.2419
-Epoch 3500/5000 - Loss: 0.2419
-Epoch 4000/5000 - Loss: 0.2419
-Epoch 4500/5000 - Loss: 0.2419
-Epoch 5000/5000 - Loss: 0.2419</code></pre>
+Epoch 500/5000 - Loss: 0.4889
+Epoch 1000/5000 - Loss: 0.2364
+Epoch 1500/5000 - Loss: 0.2281
+Epoch 2000/5000 - Loss: 0.2278
+Epoch 2500/5000 - Loss: 0.2278
+Epoch 3000/5000 - Loss: 0.2278
+Epoch 3500/5000 - Loss: 0.2278
+Epoch 4000/5000 - Loss: 0.2278
+Epoch 4500/5000 - Loss: 0.2278
+Epoch 5000/5000 - Loss: 0.2278</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>

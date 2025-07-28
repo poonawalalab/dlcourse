@@ -1,6 +1,7 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
+from utils import imshow
 
 
 def load_cifar(transform,batch_size=8):
@@ -68,15 +69,14 @@ def show_cifar(model,testloader,device,classes):
         dataiter = iter(testloader)
         images, labels = next(dataiter)
         tempthing=images.to(device)
-        print(type(next(dataiter)))
+        print()
 
-        print('Look at 4 images in detail') 
-        # print images
-        # imshow(torchvision.utils.make_grid(images))
-        print('GroundTruth: ', ' '.join(f'{classes[labels[j]]:5s}' for j in range(2)))
+        print(f'Look at {images.shape[0]} images in detail') 
+        print('GroundTruth: ', ' '.join(f'{classes[labels[j]]:5s}' for j in range(images.shape[0])))
 
         outputs = model(tempthing)
         _, predicted = torch.max(outputs, 1)
 
-        print(predicted)
-        print('Predicted: ', ' '.join(f'{classes[predicted[j]]:5s}' for j in range(2)))
+        print('Predicted: ', ' '.join(f'{classes[predicted[j]]:5s}' for j in range(images.shape[0])))
+        # display images
+        imshow(torchvision.utils.make_grid(images))

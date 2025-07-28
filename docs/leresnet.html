@@ -293,7 +293,7 @@
 <span id="cb3-3"><a></a><span class="im">from</span> torchvision <span class="im">import</span> datasets, transforms</span>
 <span id="cb3-4"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-5"><a></a><span class="im">from</span> data <span class="im">import</span> load_MNIST, eval_MNIST</span>
-<span id="cb3-6"><a></a><span class="im">from</span> models <span class="im">import</span> LeNet</span>
+<span id="cb3-6"><a></a><span class="im">from</span> models_live <span class="im">import</span> LeNet</span>
 <span id="cb3-7"><a></a></span>
 <span id="cb3-8"><a></a></span>
 <span id="cb3-9"><a></a></span>
@@ -431,7 +431,7 @@
 <span id="cb5-63"><a></a></span>
 <span id="cb5-64"><a></a>        <span class="va">self</span>.de_layer3 <span class="op">=</span> Interpolate(scale_factor<span class="op">=</span><span class="dv">7</span>, mode<span class="op">=</span><span class="st">'bilinear'</span>)</span>
 <span id="cb5-65"><a></a></span>
-<span id="cb5-66"><a></a>        <span class="va">self</span>.resnet50 <span class="op">=</span> torch.hub.load(<span class="st">'NVIDIA/DeepLearningExamples:torchhub'</span>, <span class="st">'nvidia_resnet50'</span>, pretrained<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-66"><a></a>        <span class="va">self</span>.resnet50 <span class="op">=</span> models.resnet18(pretrained<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-67"><a></a>        <span class="va">self</span>.resnet50.fc <span class="op">=</span> nn.Linear(<span class="va">self</span>.resnet50.fc.in_features, <span class="dv">10</span>)</span>
 <span id="cb5-68"><a></a>        nn.init.xavier_uniform_(<span class="va">self</span>.resnet50.fc.weight)</span>
 <span id="cb5-69"><a></a>        <span class="va">self</span>.decoder <span class="op">=</span> nn.Sequential(</span>
@@ -571,13 +571,13 @@
 <span id="cb7-31"><a></a>    transform <span class="op">=</span> transforms.Compose(</span>
 <span id="cb7-32"><a></a>        [ transforms.ToTensor(),</span>
 <span id="cb7-33"><a></a>         transforms.Normalize((<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), (<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>))])</span>
-<span id="cb7-34"><a></a>    classes, trainset, trainloader, testset, testloader <span class="op">=</span> load_cifar(transform,batch_size<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb7-34"><a></a>    classes, trainset, trainloader, testset, testloader <span class="op">=</span> load_cifar(transform,batch_size<span class="op">=</span><span class="dv">8</span>)</span>
 <span id="cb7-35"><a></a></span>
 <span id="cb7-36"><a></a></span>
 <span id="cb7-37"><a></a>    device <span class="op">=</span> torch.device(<span class="st">"mps"</span>) <span class="cf">if</span> torch.mps.is_available() <span class="cf">else</span> torch.device(<span class="st">"cpu"</span>)</span>
 <span id="cb7-38"><a></a>    <span class="bu">print</span>(<span class="ss">f'Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> for inference'</span>)</span>
 <span id="cb7-39"><a></a></span>
-<span id="cb7-40"><a></a>    <span class="co"># PATH = 'cifar_model_v3.pth'</span></span>
+<span id="cb7-40"><a></a>    <span class="co"># PATH = 'cifar_model_v4.pth'</span></span>
 <span id="cb7-41"><a></a>    <span class="co"># model.load_state_dict(torch.load(PATH))</span></span>
 <span id="cb7-42"><a></a>    model <span class="op">=</span> ResNetInt()</span>
 <span id="cb7-43"><a></a>    model.to(device)</span>
@@ -593,7 +593,7 @@
 <span id="cb7-53"><a></a></span>
 <span id="cb7-54"><a></a>    <span class="bu">print</span>(<span class="st">'Start training'</span>) </span>
 <span id="cb7-55"><a></a>    model.train()</span>
-<span id="cb7-56"><a></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):  <span class="co"># loop over the dataset multiple times</span></span>
+<span id="cb7-56"><a></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):  <span class="co"># loop over the dataset multiple times</span></span>
 <span id="cb7-57"><a></a></span>
 <span id="cb7-58"><a></a>        running_loss <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb7-59"><a></a>        <span class="cf">for</span> i, data <span class="kw">in</span> <span class="bu">enumerate</span>(trainloader, <span class="dv">0</span>):</span>
@@ -617,7 +617,7 @@
 <span id="cb7-77"><a></a></span>
 <span id="cb7-78"><a></a>    <span class="bu">print</span>(<span class="st">'Finished Training'</span>)</span>
 <span id="cb7-79"><a></a></span>
-<span id="cb7-80"><a></a>    PATH <span class="op">=</span> <span class="st">'./cifar_model_v4.pth'</span></span>
+<span id="cb7-80"><a></a>    PATH <span class="op">=</span> <span class="st">'./cifar_model_v5.pth'</span></span>
 <span id="cb7-81"><a></a>    torch.save(model.state_dict(), PATH)</span>
 <span id="cb7-82"><a></a></span>
 <span id="cb7-83"><a></a></span>
@@ -694,7 +694,7 @@
 <span id="cb8-63"><a></a></span>
 <span id="cb8-64"><a></a>        <span class="va">self</span>.de_layer3 <span class="op">=</span> Interpolate(scale_factor<span class="op">=</span><span class="dv">7</span>, mode<span class="op">=</span><span class="st">'bilinear'</span>)</span>
 <span id="cb8-65"><a></a></span>
-<span id="cb8-66"><a></a>        <span class="va">self</span>.resnet50 <span class="op">=</span> torch.hub.load(<span class="st">'NVIDIA/DeepLearningExamples:torchhub'</span>, <span class="st">'nvidia_resnet50'</span>, pretrained<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-66"><a></a>        <span class="va">self</span>.resnet50 <span class="op">=</span> models.resnet18(pretrained<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb8-67"><a></a>        <span class="va">self</span>.resnet50.fc <span class="op">=</span> nn.Linear(<span class="va">self</span>.resnet50.fc.in_features, <span class="dv">10</span>)</span>
 <span id="cb8-68"><a></a>        nn.init.xavier_uniform_(<span class="va">self</span>.resnet50.fc.weight)</span>
 <span id="cb8-69"><a></a>        <span class="va">self</span>.decoder <span class="op">=</span> nn.Sequential(</span>

@@ -63,7 +63,7 @@ class ResNetInt(nn.Module):
 
         self.de_layer3 = Interpolate(scale_factor=7, mode='bilinear')
 
-        self.resnet50 = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_resnet50', pretrained=True)
+        self.resnet50 = models.resnet18(pretrained=True)
         self.resnet50.fc = nn.Linear(self.resnet50.fc.in_features, 10)
         nn.init.xavier_uniform_(self.resnet50.fc.weight)
         self.decoder = nn.Sequential(

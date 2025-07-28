@@ -31,13 +31,13 @@ if __name__ == "__main__":
     transform = transforms.Compose(
         [ transforms.ToTensor(),
          transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-    classes, trainset, trainloader, testset, testloader = load_cifar(transform,batch_size=16)
+    classes, trainset, trainloader, testset, testloader = load_cifar(transform,batch_size=8)
 
 
     device = torch.device("mps") if torch.mps.is_available() else torch.device("cpu")
     print(f'Using {device} for inference')
 
-    # PATH = 'cifar_model_v3.pth'
+    # PATH = 'cifar_model_v4.pth'
     # model.load_state_dict(torch.load(PATH))
     model = ResNetInt()
     model.to(device)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     print('Start training') 
     model.train()
-    for epoch in range(10):  # loop over the dataset multiple times
+    for epoch in range(2):  # loop over the dataset multiple times
 
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     print('Finished Training')
 
-    PATH = './cifar_model_v4.pth'
+    PATH = './cifar_model_v5.pth'
     torch.save(model.state_dict(), PATH)
 
 

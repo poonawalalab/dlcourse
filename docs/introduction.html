@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction – Deep Learning Course</title>
+<title>Getting Started – Deep Learning Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -136,7 +136,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction.html">Getting Started</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -159,7 +159,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introduction.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -171,6 +171,12 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loss Functions</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./simplemodels.html" class="sidebar-item-text sidebar-link">
@@ -248,7 +254,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a>
+  <li><a href="#packages" id="toc-packages" class="nav-link active" data-scroll-target="#packages">Packages</a>
   <ul class="collapse">
   <li><a href="#virtual-environment" id="toc-virtual-environment" class="nav-link" data-scroll-target="#virtual-environment">Virtual Environment</a></li>
   </ul></li>
@@ -261,7 +267,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title">Getting Started</h1>
 </div>
 
 
@@ -278,10 +284,9 @@ window.Quarto = {
 </header>
 
 
-<p>This course focuses on supervised machine learning. Two areas of machine learning we do not cover involve self-supervised learning and reinforcement learning.</p>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>We use the following packages:</p>
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
+<p>We use the following major packages:</p>
 <ol type="1">
 <li><code>numpy</code>: working with <span class="math inline">\(n\)</span>-D arrays</li>
 <li><code>torch</code>: training of differentiable models</li>
@@ -291,8 +296,8 @@ window.Quarto = {
 <li><code>tqdm</code>: progress bars in the command line</li>
 <li><code>scikit-learn</code>: source some classic datasets</li>
 </ol>
-<p>The following command uses <code>pip</code> to install these <code>python</code> packages:</p>
-<pre><code>pip install torch torchvision numpy matplotlib tqdm pandas scikit-learn</code></pre>
+<p>The following command uses <code>pip</code> to install these <code>python</code> packages and some other minor ones:</p>
+<pre><code>pip install torch torchvision numpy matplotlib tqdm pandas scikit-learn requests validators openpyxl</code></pre>
 <section id="virtual-environment" class="level3">
 <h3 class="anchored" data-anchor-id="virtual-environment">Virtual Environment</h3>
 <p>Virtual environments allow you to install a custom set of packages with custom package versions for a project.</p>
@@ -301,7 +306,7 @@ window.Quarto = {
 <p>to create a blank virtual environment.</p>
 <p>Activate it, and then install packages. Upon activation, the command line prompt changes to start with the name of the virtual environment. Here, it would be <code>(code-venv)</code>:</p>
 <pre><code>source code-venv/bin/activate
-pip install torch torchvision numpy matplotlib tqdm pandas scikit-learn</code></pre>
+pip install &lt;packages above&gt;</code></pre>
 <p>When you are done, you can run <code>deactivate</code> to return to the default global environment.</p>
 </section>
 </section>

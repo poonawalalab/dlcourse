@@ -3,7 +3,7 @@ import torch.nn.functional as F
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 from data import load_MNIST, eval_MNIST
-from models import LeNet
+from models_live import LeNet
 
 
 

@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 import os
 from data import load_cifar, test_cifar, show_cifar
 from utils import imshow
-from models import ResNetCIFAR
+from models import ResNet18CIFAR as ResNetCIFAR
 
 import torch.nn as nn
 import torch.nn.functional as F
